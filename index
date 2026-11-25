@@ -1,0 +1,2414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Boeing SRM Exam Simulator (ATA 51–57) — 3 Exam Keys</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+          },
+          colors: {
+            aerospace: {
+              950: '#07111e',
+              900: '#0b192c',
+              800: '#132844',
+              700: '#1c3b63',
+            },
+            aviation: {
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+            }
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans antialiased min-h-screen flex flex-col">
+
+  <!-- Main Aerospace Header -->
+  <header class="bg-aerospace-900 text-white border-b border-aerospace-700 shadow-md">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-5">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div class="flex items-start sm:items-center gap-3.5">
+          <!-- Aviation Engineering Icon -->
+          <div class="w-11 h-11 rounded-xl bg-aviation-700/30 border border-blue-400/30 flex items-center justify-center shrink-0">
+            <svg class="w-6 h-6 text-blue-300" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+            </svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="text-[11px] font-bold uppercase tracking-widest text-blue-200 bg-aerospace-800 px-2.5 py-0.5 rounded-full border border-blue-400/25">
+                ATA 51–57 &bull; Boeing SRM
+              </span>
+              <span class="text-xs font-medium text-slate-300">
+                3 Exam Keys &bull; 120 Unique Technical Questions
+              </span>
+            </div>
+            <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight text-white mt-1">
+              Boeing SRM Exam Simulator (ATA 51–57)
+            </h1>
+          </div>
+        </div>
+
+        <!-- Quick jump to summary once 40/40 questions are completed -->
+        <div id="headerSummaryBtnWrap" class="hidden">
+          <button type="button" onclick="scrollToSummary()" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-400/40 text-emerald-200 text-xs sm:text-sm font-semibold transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            View Final Results
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Sticky Top Dashboard: Exam Key Tabs, Live Metrics, Progress Bar, Filters & Reset -->
+  <section class="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-3.5 space-y-3">
+
+      <!-- Prominent Exam Key Selector Tabs -->
+      <nav aria-label="Exam key selector" class="grid grid-cols-3 gap-2">
+        <button id="tab-key1" type="button" onclick="switchKey('key1')" class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 px-3 sm:px-4 py-2.5 rounded-xl border text-left transition focus:outline-none focus:ring-2 focus:ring-aviation-700">
+          <span class="text-xs sm:text-sm font-bold">Exam Key 1</span>
+          <span id="tab-badge-key1" class="text-[11px] font-bold px-2 py-0.5 rounded-md self-start sm:self-auto">0/40</span>
+        </button>
+
+        <button id="tab-key2" type="button" onclick="switchKey('key2')" class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 px-3 sm:px-4 py-2.5 rounded-xl border text-left transition focus:outline-none focus:ring-2 focus:ring-aviation-700">
+          <span class="text-xs sm:text-sm font-bold">Exam Key 2</span>
+          <span id="tab-badge-key2" class="text-[11px] font-bold px-2 py-0.5 rounded-md self-start sm:self-auto">0/40</span>
+        </button>
+
+        <button id="tab-key3" type="button" onclick="switchKey('key3')" class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 px-3 sm:px-4 py-2.5 rounded-xl border text-left transition focus:outline-none focus:ring-2 focus:ring-aviation-700">
+          <span class="text-xs sm:text-sm font-bold">Exam Key 3</span>
+          <span id="tab-badge-key3" class="text-[11px] font-bold px-2 py-0.5 rounded-md self-start sm:self-auto">0/40</span>
+        </button>
+      </nav>
+
+      <!-- Live Statistics Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
+        <div class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 flex items-baseline justify-between">
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-slate-500">Answered</span>
+          <span id="stat-answered" class="text-sm sm:text-base font-extrabold text-aerospace-900">0 / 40</span>
+        </div>
+        <div class="bg-emerald-50/80 border border-emerald-200 rounded-xl px-3 py-2 flex items-baseline justify-between">
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-emerald-700">Correct</span>
+          <span id="stat-correct" class="text-sm sm:text-base font-extrabold text-emerald-700">0</span>
+        </div>
+        <div class="bg-rose-50/80 border border-rose-200 rounded-xl px-3 py-2 flex items-baseline justify-between">
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-rose-700">Incorrect</span>
+          <span id="stat-incorrect" class="text-sm sm:text-base font-extrabold text-rose-700">0</span>
+        </div>
+        <div class="bg-blue-50/80 border border-blue-200 rounded-xl px-3 py-2 flex items-baseline justify-between">
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-aviation-700">Accuracy</span>
+          <span id="stat-accuracy" class="text-sm sm:text-base font-extrabold text-aviation-700">0%</span>
+        </div>
+      </div>
+
+      <!-- Live Progress Bar -->
+      <div class="w-full h-2 bg-slate-200 rounded-full overflow-hidden" aria-label="Exam completion progress">
+        <div id="progress-bar" class="h-full bg-aviation-700 rounded-full transition-all duration-300" style="width: 0%"></div>
+      </div>
+
+      <!-- Filter Pills & Reset Key Button -->
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <div class="flex items-center gap-1.5 flex-wrap" role="group" aria-label="Filter questions">
+          <span class="text-xs font-semibold text-slate-500 mr-1">Filter:</span>
+          <button id="filter-all" type="button" onclick="setFilter('all')" class="px-3 py-1.5 rounded-lg text-xs font-semibold transition">
+            All (<span id="count-all">40</span>)
+          </button>
+          <button id="filter-unanswered" type="button" onclick="setFilter('unanswered')" class="px-3 py-1.5 rounded-lg text-xs font-semibold transition">
+            Unanswered (<span id="count-unanswered">40</span>)
+          </button>
+          <button id="filter-incorrect" type="button" onclick="setFilter('incorrect')" class="px-3 py-1.5 rounded-lg text-xs font-semibold transition">
+            Incorrect (<span id="count-incorrect">0</span>)
+          </button>
+        </div>
+
+        <button type="button" onclick="openResetModal()" class="inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-lg border border-slate-300 bg-white hover:bg-rose-50 hover:border-rose-300 hover:text-rose-700 text-slate-700 text-xs font-semibold transition self-start sm:self-auto">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          Reset Key
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
+
+    <!-- Reference Legend of the 3 PDF Sources -->
+    <div class="bg-white rounded-xl border border-slate-200 px-4 py-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-slate-600 shadow-xs">
+      <span class="font-bold text-aerospace-900 uppercase tracking-wider text-[11px]">PDF Sources:</span>
+      <span class="inline-flex items-center gap-1.5">
+        <span class="w-2.5 h-2.5 rounded-full bg-aviation-700"></span>
+        <span>Source 1: Boeing ATA 51-57 (737-747-757-767-777)</span>
+      </span>
+      <span class="inline-flex items-center gap-1.5">
+        <span class="w-2.5 h-2.5 rounded-full bg-amber-600"></span>
+        <span>Source 2: Structural Damage Assessment (737-747-757-767-777)</span>
+      </span>
+      <span class="inline-flex items-center gap-1.5">
+        <span class="w-2.5 h-2.5 rounded-full bg-teal-600"></span>
+        <span>Source 3: Boeing ATA 51-57 with Damage Assessment &amp; Repair (787)</span>
+      </span>
+    </div>
+
+    <!-- Questions List Container -->
+    <div id="questions-container" class="space-y-5">
+      <!-- 40 Question Cards rendered dynamically -->
+    </div>
+
+    <!-- Empty Filter State -->
+    <div id="empty-filter-state" class="hidden bg-white rounded-2xl border border-slate-200 p-10 text-center shadow-xs">
+      <div class="w-12 h-12 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-3">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+      <h3 class="text-base font-bold text-aerospace-900">No questions match this filter</h3>
+      <p id="empty-filter-text" class="text-sm text-slate-500 mt-1"></p>
+      <button type="button" onclick="setFilter('all')" class="mt-4 px-4 py-2 rounded-xl bg-aviation-700 hover:bg-aviation-800 text-white text-xs font-semibold transition">
+        Show All Questions
+      </button>
+    </div>
+
+    <!-- Final Results Summary Card (Bottom of page, automatically revealed when all 40 questions are answered) -->
+    <section id="summary-card" class="hidden bg-white rounded-2xl border-2 border-aviation-700 shadow-lg overflow-hidden scroll-mt-48">
+      <div class="bg-aerospace-900 text-white px-6 py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-widest text-blue-300">Exam Completed</span>
+          <h2 id="summary-title" class="text-xl sm:text-2xl font-extrabold mt-1">Final Results — Exam Key 1</h2>
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="text-right">
+            <span class="block text-xs text-slate-300">Overall Score</span>
+            <span id="summary-score" class="text-3xl font-extrabold text-white">0%</span>
+          </div>
+          <span id="summary-status-badge" class="px-3.5 py-1.5 rounded-xl text-xs font-extrabold uppercase tracking-wider"></span>
+        </div>
+      </div>
+
+      <div class="p-6 space-y-5">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 bg-slate-50 border border-slate-200 rounded-xl p-4">
+          <p id="summary-message" class="text-sm text-slate-700 leading-relaxed"></p>
+          <span class="text-xs font-bold text-slate-500 uppercase tracking-wider shrink-0">Passing Threshold: 75%</span>
+        </div>
+
+        <div>
+          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">Accuracy Breakdown by PDF Source</h3>
+          <div id="summary-breakdown" class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+            <!-- Source 1, Source 2, Source 3 cards rendered dynamically -->
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-end gap-3 pt-3 border-t border-slate-100">
+          <button type="button" onclick="reviewIncorrect()" class="px-4 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-sm font-semibold transition">
+            Review Incorrect Questions
+          </button>
+          <button type="button" onclick="openResetModal()" class="px-5 py-2.5 rounded-xl bg-aviation-700 hover:bg-aviation-800 text-white text-sm font-semibold shadow-xs transition">
+            Retake This Key
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200 mt-10">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500">
+      <span>Boeing SRM Exam Simulator (ATA 51–57) &bull; Training Study Tool</span>
+      <span>Progress is saved automatically per Exam Key in localStorage</span>
+    </div>
+  </footer>
+
+  <!-- Custom Reset Confirmation Modal (No native alert/confirm) -->
+  <div id="reset-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-aerospace-950/65 backdrop-blur-xs p-4" role="dialog" aria-modal="true" aria-labelledby="reset-modal-title">
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-md w-full p-6">
+      <div class="flex items-start gap-3.5">
+        <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+        </div>
+        <div>
+          <h3 id="reset-modal-title" class="text-base font-bold text-aerospace-900">Reset Exam Key 1?</h3>
+          <p class="text-sm text-slate-600 mt-1 leading-relaxed">
+            This will clear all recorded answers and reset your score for the active exam key. Your progress in the other exam keys will remain saved.
+          </p>
+        </div>
+      </div>
+      <div class="mt-6 flex items-center justify-end gap-2.5">
+        <button type="button" onclick="closeResetModal()" class="px-4 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-sm font-semibold transition">
+          Cancel
+        </button>
+        <button type="button" onclick="confirmResetKey()" class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-sm font-semibold shadow-xs transition">
+          Yes, Reset Key
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Application Logic & Full 120-Question Technical Database -->
+  <script>
+    /**
+     * Metadata for the 3 Boeing SRM PDF sources
+     */
+    const SOURCES = {
+      1: {
+        short: 'Source 1',
+        name: 'Boeing ATA 51-57 (737-747-757-767-777)',
+        badgeClass: 'bg-blue-50 text-aviation-800 border-blue-200',
+        dotClass: 'bg-aviation-700'
+      },
+      2: {
+        short: 'Source 2',
+        name: 'Structural Damage Assessment (737-747-757-767-777)',
+        badgeClass: 'bg-amber-50 text-amber-800 border-amber-200',
+        dotClass: 'bg-amber-600'
+      },
+      3: {
+        short: 'Source 3',
+        name: 'Boeing ATA 51-57 with Damage Assessment & Repair (787)',
+        badgeClass: 'bg-teal-50 text-teal-800 border-teal-200',
+        dotClass: 'bg-teal-600'
+      }
+    };
+
+    const KEY_LABELS = {
+      key1: 'Exam Key 1',
+      key2: 'Exam Key 2',
+      key3: 'Exam Key 3'
+    };
+
+    /**
+     * Complete Bank of 120 Unique, Non-Repeating Technical Questions in English:
+     * - Exam Key 1: 40 questions (14 Source 1, 13 Source 2, 13 Source 3)
+     * - Exam Key 2: 40 questions (13 Source 1, 14 Source 2, 13 Source 3)
+     * - Exam Key 3: 40 questions (13 Source 1, 13 Source 2, 14 Source 3)
+     * Pages 1–8 of Source 1 (SDL rules, cameras, attendance, course dates/objectives) are strictly excluded.
+     */
+    const EXAM_DATA = {
+      // =========================================================================
+      // EXAM KEY 1 — 40 UNIQUE QUESTIONS
+      // =========================================================================
+      key1: [
+        // --- Source 1 (14 questions) ---
+        {
+          id: 'k1-q01',
+          source: 1,
+          question: 'Which ATA chapter in the Boeing Structural Repair Manual (SRM) contains general structural practices and typical repairs?',
+          options: [
+            'ATA 51',
+            'ATA 53',
+            'ATA 55',
+            'ATA 57'
+          ],
+          answer: 0,
+          rationale: 'ATA Chapter 51 covers Standard Practices and Structures—General, including material identification, general criteria, and typical structural repairs.'
+        },
+        {
+          id: 'k1-q02',
+          source: 1,
+          question: 'Where in the Boeing SRM should a technician look for structural repair data applicable to passenger or cargo doors?',
+          options: [
+            'ATA 51',
+            'ATA 52',
+            'ATA 53',
+            'ATA 56'
+          ],
+          answer: 1,
+          rationale: 'ATA Chapter 52 is dedicated specifically to Doors, whereas ATA 53 covers the fuselage and ATA 56 covers windows.'
+        },
+        {
+          id: 'k1-q03',
+          source: 1,
+          question: 'What is the fundamental functional difference between primary structure and secondary structure on a Boeing aircraft?',
+          options: [
+            'Primary structure is built only from titanium, while secondary structure is built only from fiberglass',
+            'Primary structure carries flight, ground, or pressurization loads, whereas secondary structure provides aerodynamic shape and supports local systems',
+            'Secondary structure carries cabin pressurization loads, while primary structure carries only ground handling loads',
+            'Secondary structure is never covered in the SRM, while primary structure is always covered in the AMM'
+          ],
+          answer: 1,
+          rationale: 'Primary structure carries critical flight, ground, or pressure loads; secondary structure (such as fairings and access panels) provides aerodynamic contour and local system support.'
+        },
+        {
+          id: 'k1-q04',
+          source: 1,
+          question: 'In a semi-monocoque pressurized fuselage, which internal structural members directly reinforce the load-carrying skin?',
+          options: [
+            'Nose radome and tail cone assemblies',
+            'Front spars and fuel tank ribs',
+            'Frames and stringers',
+            'Fuse pins and flap track fairings'
+          ],
+          answer: 2,
+          rationale: 'Semi-monocoque construction relies on a load-carrying outer skin reinforced by circumferential frames and longitudinal stringers.'
+        },
+        {
+          id: 'k1-q05',
+          source: 1,
+          question: 'On the Boeing 737NG, where is the Body Station datum point (STA 0) located?',
+          options: [
+            'At the exact tip of the nose radome',
+            'At an invisible datum point 130 inches forward of the tip of the nose',
+            'At the center of the main landing gear wheel well',
+            'At the aft pressure bulkhead centerline'
+          ],
+          answer: 1,
+          rationale: 'On the 737NG, Body Station STA 0 is an invisible reference datum located 130 inches forward of the nose tip, which puts the nose tip at STA 130.'
+        },
+        {
+          id: 'k1-q06',
+          source: 1,
+          question: 'Which Boeing maintenance manuals are classified as "Non-Customised but Type Effective"?',
+          options: [
+            'AMM, IPC, TSM, and WBM',
+            'SRM, NTM, MPD, and EM',
+            'CPM, SPM, PMT, and SM',
+            'SWPM, FRM, FIM, and MEL'
+          ],
+          answer: 1,
+          rationale: 'Boeing classifies the SRM, Nondestructive Testing Manual (NTM), Maintenance Planning Document (MPD), and Engine Manual (EM) as non-customised but type effective.'
+        },
+        {
+          id: 'k1-q07',
+          source: 1,
+          question: 'Unless specified differently, what is the default unit of measurement for all dimensions given in the Boeing Structural Repair Manual?',
+          options: [
+            'Millimeters',
+            'Centimeters',
+            'Inches',
+            'Feet'
+          ],
+          answer: 2,
+          rationale: 'The SRM Introduction explicitly states that unless specified differently, all dimensions in the manual are given in inches.'
+        },
+        {
+          id: 'k1-q08',
+          source: 1,
+          question: 'Which regulatory authority provides approval for the structural repair data published in the Boeing SRM?',
+          options: [
+            'The International Air Transport Association (IATA)',
+            'The Federal Aviation Administration (FAA)',
+            'The airline maintenance planning department',
+            'The National Transportation Safety Board (NTSB)'
+          ],
+          answer: 1,
+          rationale: 'The SRM Introduction states that the Federal Aviation Administration (FAA) gives approval for the repair data contained in the Structural Repair Manual.'
+        },
+        {
+          id: 'k1-q09',
+          source: 1,
+          question: 'What primary purpose do fuse pins (fuse bolts) serve in a Boeing engine pylon/strut installation (ATA 54)?',
+          options: [
+            'They increase wing torsional stiffness during high-speed cruise',
+            'They provide controlled separation load paths under extreme overload conditions',
+            'They conduct bleed air to the engine cowl anti-ice system',
+            'They isolate aluminum cowls from carbon fiber pylon fairings'
+          ],
+          answer: 1,
+          rationale: 'Fuse pins are engineered to shear at predetermined extreme loads so the engine separates cleanly without rupturing the wing fuel tank structure.'
+        },
+        {
+          id: 'k1-q10',
+          source: 1,
+          question: 'Why are steel, titanium, or corrosion-resistant alloys specified in high-temperature and fire zones of nacelles and pylons (ATA 54)?',
+          options: [
+            'To maintain structural integrity and fire containment where aluminum or standard resins would degrade',
+            'Because steel and titanium are lighter than carbon fiber in every structural application',
+            'To permit cold-riveting without heat treatment',
+            'To allow weather radar signals to pass through the nacelle'
+          ],
+          answer: 0,
+          rationale: 'High-temperature and fire zones require steel, titanium, or heat-resistant alloys because aluminum alloys and composite resins lose strength rapidly under elevated heat or fire.'
+        },
+        {
+          id: 'k1-q11',
+          source: 1,
+          question: 'On the Boeing 777 composite application diagram, which composite material combination is used for the empennage torque boxes?',
+          options: [
+            'Fiberglass only',
+            'Carbon Fiber Reinforced Plastic (CFRP) + Nylon',
+            'Aramid honeycomb with aluminum face sheets only',
+            'Unreinforced thermoplastic resin'
+          ],
+          answer: 1,
+          rationale: 'On the Boeing 777, the horizontal and vertical stabilizer torque boxes use Carbon Fiber Reinforced Plastic (CFRP) + Nylon.'
+        },
+        {
+          id: 'k1-q12',
+          source: 1,
+          question: 'What is the primary reason modern Boeing aircraft incorporate composite materials such as CFRP?',
+          options: [
+            'Their high strength-to-weight ratio enables significant structural weight reduction',
+            'They require no lightning strike protection on exterior surfaces',
+            'They are electrically non-conductive and cannot cause galvanic corrosion with aluminum',
+            'They can be repaired exclusively with standard solid aluminum rivets'
+          ],
+          answer: 0,
+          rationale: 'CFRP offers an exceptionally high strength-to-weight ratio, delivering substantial weight savings and improved corrosion resistance compared to conventional alloys.'
+        },
+        {
+          id: 'k1-q13',
+          source: 1,
+          question: 'When an aluminum component must contact a Carbon Fiber Reinforced Plastic (CFRP) structure, what galvanic corrosion protection is required?',
+          options: [
+            'Leave the aluminum bare and install cadmium-plated aluminum rivets',
+            'Anodize, prime, and enamel the aluminum, apply isolating sealant to contact surfaces and fasteners, and use CRES or titanium fasteners',
+            'Apply general-purpose bearing grease without sealant',
+            'Bond the aluminum directly to raw carbon fibers using conductive adhesive'
+          ],
+          answer: 1,
+          rationale: 'Because carbon is strongly cathodic to aluminum, aluminum must be anodized, primed, and enameled, isolated with sealant on all faying surfaces and fasteners, and joined with CRES or titanium fasteners.'
+        },
+        {
+          id: 'k1-q14',
+          source: 1,
+          question: 'Using the Boeing SRM numbering system example, which Chapter-Section-Subject contains allowable damage and repair data for Horizontal Stabilizer Forward Box Ribs?',
+          options: [
+            '55-10-09',
+            '53-10-09',
+            '57-10-09',
+            '51-10-09'
+          ],
+          answer: 0,
+          rationale: 'In the SRM navigation example, Chapter 55 covers Stabilizers, Section 55-10 covers the Horizontal Stabilizer, and Subject 55-10-09 specifically covers Horizontal Stabilizer Forward Box Ribs.'
+        },
+
+        // --- Source 2 (13 questions) ---
+        {
+          id: 'k1-q15',
+          source: 2,
+          question: 'What is the strict sequence of the 5-step Structural Damage Assessment Team Workflow?',
+          options: [
+            'ASSESS -> MEASURE -> LOCATE -> IDENTIFY -> RECORD',
+            'IDENTIFY -> LOCATE -> MEASURE -> ASSESS -> RECORD',
+            'LOCATE -> IDENTIFY -> MEASURE -> RECORD -> ASSESS',
+            'MEASURE -> LOCATE -> RECORD -> IDENTIFY -> ASSESS'
+          ],
+          answer: 2,
+          rationale: 'The disciplined damage assessment workflow must follow the exact order: 1. LOCATE, 2. IDENTIFY, 3. MEASURE, 4. RECORD, and 5. ASSESS.'
+        },
+        {
+          id: 'k1-q16',
+          source: 2,
+          question: 'When initiating the Damage Evaluation Process (DEP) after an impact or structural finding, what is the first documentary check that must be performed?',
+          options: [
+            'Submit an immediate engineering repair request to Boeing',
+            'Check whether an applicable special inspection exists in AMM Chapter 5',
+            'Stop-drill the ends of the damage with a 0.25-inch drill bit',
+            'Apply topcoat paint to prevent moisture ingress'
+          ],
+          answer: 1,
+          rationale: 'The first documentary check in the DEP is verifying whether the event triggers a mandatory special inspection in AMM Chapter 5 (Time Limits / Maintenance Checks).'
+        },
+        {
+          id: 'k1-q17',
+          source: 2,
+          question: 'What four core elements make a structural damage report useful so another engineer can locate, understand, and reassess the damage?',
+          options: [
+            'Observed facts, accurate measurements, structural inspection results, and a clear next action',
+            'Airline flight number, estimated repair cost, crew names, and paint code',
+            'One distant photograph, an assumed SRM limit, and a verbal summary',
+            'Aircraft weight and balance sheet, fuel load, and gate number'
+          ],
+          answer: 0,
+          rationale: 'An effective technical damage report documents objective observed facts, precise measurements, structural inspection findings, and a clear next action.'
+        },
+        {
+          id: 'k1-q18',
+          source: 2,
+          question: 'How does the Boeing SRM define an Allowable Damage Limit (ADL)?',
+          options: [
+            'The largest cosmetic patch that may be installed without NDI',
+            'The maximum damage at a specific location on a structural member that does not reduce strength below regulatory load requirements',
+            'The maximum number of flights permitted with an uninspected through-crack',
+            'The minimum rivet edge distance permitted on a repair doubler'
+          ],
+          answer: 1,
+          rationale: 'The ADL defines the maximum permissible damage in a specific structural location that still maintains structural strength above regulatory load requirements.'
+        },
+        {
+          id: 'k1-q19',
+          source: 2,
+          question: 'According to SRM 51-00-21-0G-0 and 51-00-06, how are Repair Categories A, B, and C defined?',
+          options: [
+            'Category A = temporary, Category B = cosmetic, Category C = permanent',
+            'Category A = permanent, Category B = interim, Category C = time-limited',
+            'Category A = composite, Category B = metallic, Category C = hybrid',
+            'Category A = ferry-only, Category B = permanent, Category C = unapproved'
+          ],
+          answer: 1,
+          rationale: 'In Boeing SRM classification, Category A is a permanent repair, Category B is an interim repair, and Category C is a time-limited repair.'
+        },
+        {
+          id: 'k1-q20',
+          source: 2,
+          question: 'What documentation requirement applies whenever a Category B or Category C repair introduces inspections or actions outside the normal maintenance program?',
+          options: [
+            'No record is needed if the repair is smaller than 3 inches',
+            'It must be formally recorded in the aircraft maintenance records to maintain configuration control',
+            'It only needs to be noted on a temporary hangar whiteboard',
+            'It is documented only during the next heavy D-check'
+          ],
+          answer: 1,
+          rationale: 'Category B and C repairs carrying supplemental inspections or follow-up actions must be entered in the aircraft maintenance records so the physical configuration matches official records.'
+        },
+        {
+          id: 'k1-q21',
+          source: 2,
+          question: 'For pressurized fuselage skin outside the crown area (S10L to S10R), what is the maximum allowable cross-sectional area removed in any local region (including all initial holes)?',
+          options: [
+            '5% of the total cross-sectional area',
+            '10% of the total cross-sectional area',
+            '15% of the total cross-sectional area',
+            '25% of the total cross-sectional area'
+          ],
+          answer: 2,
+          rationale: 'For pressurized fuselage skin minus the crown area (S10L to S10R), the total cross-sectional area removed—including all initial holes—must not exceed 15% of the local total cross-sectional area.'
+        },
+        {
+          id: 'k1-q22',
+          source: 2,
+          question: 'Why must a damage assessment team NEVER start the evaluation process with an assumed SRM limit?',
+          options: [
+            'Because the SRM contains no allowable damage limits for metallic skins',
+            'Because the applicable limit depends on exact location, damage type, verified measurements, aircraft effectivity, and inspection findings',
+            'Because SRM limits apply only to new aircraft under 500 cycles',
+            'Because only the flight crew is authorized to read SRM tables'
+          ],
+          answer: 1,
+          rationale: 'Assuming a limit upfront biases the inspection; objective locating, identifying, measuring, and recording must occur before evaluating against effectivity-verified SRM data.'
+        },
+        {
+          id: 'k1-q23',
+          source: 2,
+          question: 'In metallic structural damage terminology, how is a "gouge" distinguished from a "dent"?',
+          options: [
+            'A gouge involves metal removal and displacement with rough or sharp edges, whereas a dent is a surface depression with smooth contours and no metal removal',
+            'A dent always penetrates completely through the skin, while a gouge never affects skin thickness',
+            'A gouge occurs only from corrosion, while a dent occurs only from fatigue',
+            'There is no distinction between a gouge and a dent in the SRM'
+          ],
+          answer: 0,
+          rationale: 'A gouge removes or displaces material creating sharp stress risers, whereas a dent depresses the contour smoothly without removing metal.'
+        },
+        {
+          id: 'k1-q24',
+          source: 2,
+          question: 'Which Non-Destructive Inspection (NDI) method is most commonly used on aluminum aircraft structures to detect surface and near-surface fatigue cracks around fastener holes?',
+          options: [
+            'Magnetic particle inspection',
+            'Eddy current inspection',
+            'Coin tap testing',
+            'Visual boroscope check only'
+          ],
+          answer: 1,
+          rationale: 'Eddy current NDI is highly sensitive to surface and near-surface cracks in conductive non-ferromagnetic alloys like aluminum, especially around fastener holes.'
+        },
+        {
+          id: 'k1-q25',
+          source: 2,
+          question: 'When blending out (cleaning up) a scratch, nick, or surface corrosion on a metallic skin, what must be done immediately after blend-out?',
+          options: [
+            'Paint over the area immediately without measuring',
+            'Measure the final blended depth and dimensions and compare them against the SRM allowable limits',
+            'Install a flush patch regardless of the remaining thickness',
+            'Stop-drill the center of the blended area'
+          ],
+          answer: 1,
+          rationale: 'The "clean up, measure, compare" discipline requires measuring the actual post-blend dimensions and remaining thickness before comparing with SRM allowable limits.'
+        },
+        {
+          id: 'k1-q26',
+          source: 2,
+          question: 'Why must fastener edge margin and fastener spacing rules be strictly maintained during metallic blend-out or structural repair?',
+          options: [
+            'To prevent tear-out, bearing failure, or inter-rivet buckling under structural loads',
+            'Solely to improve the exterior cosmetic appearance of rivet rows',
+            'To reduce the curing time of faying-surface sealant',
+            'Because oversized edge margins are prohibited on secondary fairings'
+          ],
+          answer: 0,
+          rationale: 'Proper fastener edge margin and pitch/spacing ensure adequate bearing strength and prevent sheet tear-out or premature fatigue cracking.'
+        },
+        {
+          id: 'k1-q27',
+          source: 2,
+          question: 'Which NDI method is restricted specifically to ferromagnetic materials such as steel landing gear fittings or steel bolts?',
+          options: [
+            'Dye penetrant inspection',
+            'Ultrasonic inspection',
+            'Magnetic particle inspection',
+            'Radiographic (X-ray) inspection'
+          ],
+          answer: 2,
+          rationale: 'Magnetic particle inspection relies on magnetic flux leakage at discontinuities and therefore works only on ferromagnetic metals like steel.'
+        },
+
+        // --- Source 3 (13 questions) ---
+        {
+          id: 'k1-q28',
+          source: 3,
+          question: 'What are the upper lobe and lower lobe radii of the Boeing 787 fuselage cross-section, and what structural element separates them?',
+          options: [
+            'Upper lobe 95 in, lower lobe 90 in, separated by the keel beam',
+            'Upper lobe 113 in, lower lobe 110 in, separated by the passenger floor',
+            'Upper lobe 125 in, lower lobe 120 in, separated by the cargo floor',
+            'Both lobes have an identical radius of 105 in with no floor separation'
+          ],
+          answer: 1,
+          rationale: 'The Boeing 787 fuselage features an upper lobe radius of 113 inches and a lower lobe radius of 110 inches, separated by the passenger floor.'
+        },
+        {
+          id: 'k1-q29',
+          source: 3,
+          question: 'Between Body Stations STA 132.5 and STA 1878 on the Boeing 787, how are the fuselage skins and longitudinal stringers fabricated?',
+          options: [
+            'Aluminum-lithium skins with riveted Z-section stringers',
+            'CFRP skins with co-cured longitudinal stringers',
+            'Titanium skins with laser-welded stringers',
+            'Fiberglass honeycomb panels with bonded aluminum stringers'
+          ],
+          answer: 1,
+          rationale: 'From STA 132.5 to STA 1878, the 787 fuselage barrel sections are constructed from CFRP skins with co-cured longitudinal stringers.'
+        },
+        {
+          id: 'k1-q30',
+          source: 3,
+          question: 'Where are critical local reinforcements built into the Boeing 787 composite fuselage that must be accounted for during repair planning?',
+          options: [
+            'Only beneath the exterior decorative livery',
+            'Around cutouts (doors, windows, nose and main landing gear wheel wells) and at local load introduction points',
+            'Exclusively inside the forward nose radome',
+            'Only along the interior overhead stowage bin tracks'
+          ],
+          answer: 1,
+          rationale: 'Local ply buildups and reinforcements are concentrated around major cutouts—doors, windows, and landing gear wheel wells—and at local load introduction points.'
+        },
+        {
+          id: 'k1-q31',
+          source: 3,
+          question: 'In the Boeing 787 wing structure (ATA 57), what materials are used for the front/rear spars and the wing ribs?',
+          options: [
+            'Aluminum spars and titanium ribs',
+            'Carbon epoxy front and rear spars, and aluminum ribs',
+            'CRES steel spars and carbon epoxy ribs',
+            'Fiberglass spars and magnesium ribs'
+          ],
+          answer: 1,
+          rationale: 'The 787 wing torque box combines carbon epoxy front and rear spars with aluminum ribs.'
+        },
+        {
+          id: 'k1-q32',
+          source: 3,
+          question: 'What functions do tank ribs perform inside the Boeing 787 wing fuel tanks?',
+          options: [
+            'Provide structural support, separate fuel tanks, and restrict fuel movement during maneuvers',
+            'Serve solely as electrical conduits for fuel quantity sensors',
+            'Act only as decorative covers for lower wing access doors',
+            'Pressurize the fuel tanks during climb'
+          ],
+          answer: 0,
+          rationale: 'Tank ribs provide internal wing structural support, compartmentalize fuel tanks, and limit fuel sloshing during aircraft maneuvers.'
+        },
+        {
+          id: 'k1-q33',
+          source: 3,
+          question: 'How is the horizontal stabilizer constructed on the Boeing 787-9 and 787-10?',
+          options: [
+            'Two aluminum spars with riveted metallic skins',
+            'A center box assembly and 5 spars of carbon epoxy solid laminate structure, CFRP solid laminate skins, aluminum auxiliary box, and composite elevator',
+            'Three fiberglass spars with balsa-core skins',
+            'A single titanium torque tube without spars'
+          ],
+          answer: 1,
+          rationale: 'The 787-9 and 787-10 horizontal stabilizer uses a center box assembly and 5 carbon epoxy solid laminate spars, CFRP solid laminate skins, an aluminum auxiliary box, and a composite elevator.'
+        },
+        {
+          id: 'k1-q34',
+          source: 3,
+          question: 'Which Boeing Material Standard (BMS) applies to the skins and stringers of the Boeing 787 vertical stabilizer?',
+          options: [
+            'BMS 8-276',
+            'BMS 5-95',
+            'BMS 10-11',
+            'BMS 7-122'
+          ],
+          answer: 0,
+          rationale: 'The Boeing 787 vertical stabilizer composite skins and stringers are manufactured to Boeing Material Standard BMS 8-276.'
+        },
+        {
+          id: 'k1-q35',
+          source: 3,
+          question: 'Under SRM Chapter 51 composite damage definitions, what is the difference between a delamination and a disbond?',
+          options: [
+            'They are identical terms referring only to moisture absorption',
+            'Delamination is separation between plies of a laminate, while disbond is separation at the adhesive bondline between two bonded parts',
+            'Delamination occurs only in metals, while disbond occurs only in composites',
+            'Disbond is a surface scratch in paint, while delamination is a broken fastener'
+          ],
+          answer: 1,
+          rationale: 'Delamination occurs between individual plies within a composite laminate, whereas a disbond is a separation along the adhesive bondline joining two separate parts.'
+        },
+        {
+          id: 'k1-q36',
+          source: 3,
+          question: 'How does SRM Chapter 51 define a "dent" in a composite structure compared to a gouge or scratch?',
+          options: [
+            'A depressed area without material removal, featuring smooth edges and no broken fibers',
+            'A deep linear cut with fractured fibers and missing resin',
+            'A through-thickness puncture with splinters on both sides',
+            'A separation between the lightning mesh and the topcoat only'
+          ],
+          answer: 0,
+          rationale: 'A composite dent is a depressed contour with smooth edges, no material removal, and no broken fibers, distinguishing it from scratches or gouges.'
+        },
+        {
+          id: 'k1-q37',
+          source: 3,
+          question: 'Why does impact damage on a composite laminate require careful inspection of the opposite (back) side?',
+          options: [
+            'Because composites often exhibit greater visible damage and delamination on the side opposite the impact than on the impacted face',
+            'Because composite panels never show any damage on the impacted face under any circumstance',
+            'Because ultrasonic NDI only works from the interior of the cabin',
+            'Because aluminum lightning mesh is installed only on the back side'
+          ],
+          answer: 0,
+          rationale: 'Stress waves reflecting off the back face of a composite laminate commonly cause more extensive fiber fracture and delamination on the side opposite the impact.'
+        },
+        {
+          id: 'k1-q38',
+          source: 3,
+          question: 'Which NDI method is primarily used to detect internal delaminations and disbonds in solid composite laminates on the 787?',
+          options: [
+            'Magnetic particle inspection',
+            'Ultrasonic inspection',
+            'Dye penetrant inspection only',
+            'Visual flashlight check alone'
+          ],
+          answer: 1,
+          rationale: 'Ultrasonic inspection (pulse-echo or through-transmission) is the primary NDI technique for detecting and sizing internal delaminations in solid CFRP laminates.'
+        },
+        {
+          id: 'k1-q39',
+          source: 3,
+          question: 'What is the purpose of the copper or expanded metal foil mesh embedded near the outer surface of Boeing 787 composite structures?',
+          options: [
+            'To increase bending stiffness of the fuselage frames',
+            'To provide lightning strike protection by safely conducting and dissipating electrical current',
+            'To act as a structural adhesive between skin plies',
+            'To prevent fuel leaks inside the wing box'
+          ],
+          answer: 1,
+          rationale: 'Because CFRP is far less conductive than aluminum, an outer copper or expanded metal foil mesh is integrated to conduct and disperse lightning strike energy.'
+        },
+        {
+          id: 'k1-q40',
+          source: 3,
+          question: 'Why must a damaged composite structure be thoroughly dried to remove absorbed moisture before performing a hot-bonded scarf repair?',
+          options: [
+            'Moisture vaporizes at cure temperatures, causing voids, blisters, and severe bondline degradation',
+            'Moisture makes the vacuum bag impossible to seal around the fuselage',
+            'Dry carbon fibers change color to indicate ply orientation',
+            'Moisture prevents titanium fasteners from threading properly'
+          ],
+          answer: 0,
+          rationale: 'Trapped moisture turns to steam during elevated-temperature curing, creating porosity, voids, and delamination that compromise repair strength.'
+        }
+      ],
+
+      // =========================================================================
+      // EXAM KEY 2 — 40 UNIQUE QUESTIONS
+      // =========================================================================
+      key2: [
+        // --- Source 1 (13 questions) ---
+        {
+          id: 'k2-q01',
+          source: 1,
+          question: 'Which ATA chapter in the Boeing SRM covers the Fuselage?',
+          options: [
+            'ATA 51',
+            'ATA 52',
+            'ATA 53',
+            'ATA 55'
+          ],
+          answer: 2,
+          rationale: 'ATA Chapter 53 is assigned to the Fuselage, covering skins, frames, stringers, bulkheads, and floor structure.'
+        },
+        {
+          id: 'k2-q02',
+          source: 1,
+          question: 'If structural damage is found on an engine nacelle or pylon/strut, which ATA chapter of the SRM applies?',
+          options: [
+            'ATA 52',
+            'ATA 54',
+            'ATA 56',
+            'ATA 57'
+          ],
+          answer: 1,
+          rationale: 'ATA Chapter 54 covers Nacelles and Pylons (struts), including engine cowlings, fairings, and strut box structures.'
+        },
+        {
+          id: 'k2-q03',
+          source: 1,
+          question: 'Which set of loads do engine pylons/struts transfer from the powerplant into the wing structure (ATA 54)?',
+          options: [
+            'Only static engine weight while parked on the ramp',
+            'Engine weight, thrust, torsion, and maneuver loads',
+            'Cabin pressurization and rudder aerodynamic loads',
+            'Main landing gear braking loads exclusively'
+          ],
+          answer: 1,
+          rationale: 'Engine pylons act as primary load-carrying structures that transmit engine weight, thrust, torsional moments, and flight maneuver loads into the wing.'
+        },
+        {
+          id: 'k2-q04',
+          source: 1,
+          question: 'In a conventional Boeing semi-monocoque fuselage, what role does the keel beam perform?',
+          options: [
+            'It provides longitudinal bending continuity across the main landing gear wheel well cutout',
+            'It seals the forward cockpit windshield frame',
+            'It supports the vertical stabilizer rudder hinge fittings',
+            'It acts as a secondary aerodynamic fairing around the nose radome'
+          ],
+          answer: 0,
+          rationale: 'The keel beam carries longitudinal fuselage bending loads continuously beneath the wing center section and main landing gear wheel well cutout.'
+        },
+        {
+          id: 'k2-q05',
+          source: 1,
+          question: 'In Boeing aircraft coordinate systems, what does Buttock Line 0 (BL 0) represent?',
+          options: [
+            'The ground plane beneath the tires',
+            'The vertical plane along the longitudinal centerline of the fuselage',
+            'The horizontal plane passing through the cabin floor',
+            'The datum point 130 inches forward of the nose'
+          ],
+          answer: 1,
+          rationale: 'BL 0 is the fuselage centerline plane; lateral measurements to the right are Right Buttock Lines (RBL) and to the left are Left Buttock Lines (LBL).'
+        },
+        {
+          id: 'k2-q06',
+          source: 1,
+          question: 'In Boeing aircraft stationing, what type of dimension is a Water Line (WL)?',
+          options: [
+            'A longitudinal horizontal measurement from the nose datum',
+            'A lateral measurement left or right of the fuselage centerline',
+            'A vertical height measurement above a horizontal reference plane',
+            'A chordwise measurement along the wing trailing edge'
+          ],
+          answer: 2,
+          rationale: 'Water Lines (WL) measure vertical height in inches from a horizontal reference datum (for example, Floor WL 208 on the 737NG).'
+        },
+        {
+          id: 'k2-q07',
+          source: 1,
+          question: 'Which Boeing maintenance manuals are classified as "Customised Manuals" tailored to an individual operator fleet?',
+          options: [
+            'SRM, NTM, MPD, and EM',
+            'AMM, IPC, TSM, and WBM',
+            'CPM, SPM, PMT, and SM',
+            'SRM, CPM, SPM, and SM'
+          ],
+          answer: 1,
+          rationale: 'Boeing classifies the AMM, Illustrated Parts Catalogue (IPC), Trouble Shooting Manual (TSM), and Weight & Balance Manual (WBM) as customised manuals.'
+        },
+        {
+          id: 'k2-q08',
+          source: 1,
+          question: 'Which Boeing manuals fall into the "Non-Customised and Non-Type Effective" category?',
+          options: [
+            'CPM, SPM, PMT, and SM',
+            'AMM, IPC, TSM, and WBM',
+            'SRM, NTM, MPD, and EM',
+            'AMM, SRM, NTM, and IPC'
+          ],
+          answer: 0,
+          rationale: 'The Corrosion Prevention Manual (CPM), Standard Practices Manual (SPM), Procedures Materials Test Methods (PMT), and Standards Manual (SM) are non-customised and non-type effective.'
+        },
+        {
+          id: 'k2-q09',
+          source: 1,
+          question: 'How are nacelle fairings and access panels generally classified structurally under ATA 54?',
+          options: [
+            'Primary load-bearing fuse structures',
+            'Secondary structure',
+            'Pressurized cabin boundary structure',
+            'Main wing torque box structure'
+          ],
+          answer: 1,
+          rationale: 'Nacelle fairings and access panels provide aerodynamic contouring and maintenance access, classifying them as secondary structure.'
+        },
+        {
+          id: 'k2-q10',
+          source: 1,
+          question: 'On the Boeing 777 composite application diagram, which major components are constructed primarily from Fiberglass?',
+          options: [
+            'Empennage torque boxes, rudder, and elevator',
+            'Radome, wing-to-body fairing, floor panels, and main/wing landing gear doors',
+            'Ailerons, flaperons, and engine cowlings',
+            'Inboard and outboard spoilers only'
+          ],
+          answer: 1,
+          rationale: 'The 777 composite diagram identifies fiberglass on the radome, wing-to-body fairing, floor panels, trailing edge panels, wing fixed leading edge, and main/wing landing gear doors.'
+        },
+        {
+          id: 'k2-q11',
+          source: 1,
+          question: 'On the Boeing 777, which flight control surfaces and engine structures use Carbon Fiber Reinforced Plastic (CFRP)?',
+          options: [
+            'Rudder, elevator, ailerons, flaps, flaperons, spoilers, nose gear doors, and engine cowlings',
+            'Only the nose radome and passenger floor panels',
+            'Only the fuselage aluminum pressure bulkheads',
+            'Only the main landing gear shock struts'
+          ],
+          answer: 0,
+          rationale: 'The 777 extensively uses CFRP on the rudder, elevator, ailerons, inboard/outboard flaps, flaperons, spoilers, nose gear doors, floor beams (except freighter), and engine cowlings.'
+        },
+        {
+          id: 'k2-q12',
+          source: 1,
+          question: 'What primary structural elements form a conventional wing or stabilizer torque box?',
+          options: [
+            'Skins, spars, ribs, and stringers',
+            'Radome, tail cone, and passenger floor panels',
+            'Only removable leading-edge fairings and tip caps',
+            'Door frames, window forgings, and keel beams'
+          ],
+          answer: 0,
+          rationale: 'Wing and stabilizer torque boxes are closed primary structures composed of upper/lower skins, front/rear spars, ribs, and spanwise stringers.'
+        },
+        {
+          id: 'k2-q13',
+          source: 1,
+          question: 'What is the purpose of honeycomb core sandwich construction used on secondary composite panels (such as fairings and fixed trailing-edge panels)?',
+          options: [
+            'To achieve high bending stiffness at very low weight by separating thin face sheets with a lightweight core',
+            'To allow high-pressure hydraulic fluid to flow through the core cells',
+            'To replace solid titanium spars in the engine pylon',
+            'To eliminate the need for moisture sealing along panel edges'
+          ],
+          answer: 0,
+          rationale: 'Honeycomb sandwich panels separate two thin, strong face sheets with a lightweight core, maximizing bending stiffness-to-weight ratio.'
+        },
+
+        // --- Source 2 (14 questions) ---
+        {
+          id: 'k2-q14',
+          source: 2,
+          question: 'In Step 1 (LOCATE) of the 5-step damage assessment team workflow, what exact details must be established?',
+          options: [
+            'Zone, station, frame, stringer, and specific structural component',
+            'Estimated labor hours and spare parts pricing',
+            'Whether the repair will be Category A or Category C',
+            'The aircraft departure slot and passenger count'
+          ],
+          answer: 0,
+          rationale: 'Step 1 (LOCATE) pinpoints the exact structural coordinates: zone, station, frame, stringer, and affected component.'
+        },
+        {
+          id: 'k2-q15',
+          source: 2,
+          question: 'In Step 2 (IDENTIFY) of the damage assessment workflow, what is the technician required to determine?',
+          options: [
+            'The observed damage type and the surface condition of the affected area',
+            'The maximum allowable ferry differential pressure',
+            'The Boeing engineering disposition number',
+            'The next scheduled C-check interval'
+          ],
+          answer: 0,
+          rationale: 'Step 2 (IDENTIFY) focuses on objectively classifying the damage type (e.g., scratch, gouge, dent, crack, corrosion) and noting surface condition.'
+        },
+        {
+          id: 'k2-q16',
+          source: 2,
+          question: 'Which parameters are captured during Step 3 (MEASURE) of the damage assessment team workflow?',
+          options: [
+            'Length, width, depth, orientation, and geometric relationships to adjacent structure',
+            'Only the approximate length estimated visually',
+            'Only the paint thickness around the damaged panel',
+            'Only the distance from the nose tip datum'
+          ],
+          answer: 0,
+          rationale: 'Step 3 (MEASURE) records exact length, width, depth, orientation, and distances/relationships to nearby fasteners, edges, frames, or stringers.'
+        },
+        {
+          id: 'k2-q17',
+          source: 2,
+          question: 'What items must be produced during Step 4 (RECORD) of the damage assessment workflow?',
+          options: [
+            'Overview photo, location photo, close-up photo with a scale, and a clear technical sketch',
+            'A single unscaled smartphone photo without notes',
+            'Only a verbal radio report to maintenance control',
+            'A copy of the flight crew logbook only'
+          ],
+          answer: 0,
+          rationale: 'Step 4 (RECORD) captures complete visual and graphical evidence—overview, location, close-up with scale, and a dimensioned sketch.'
+        },
+        {
+          id: 'k2-q18',
+          source: 2,
+          question: 'During Step 5 (ASSESS) of the damage assessment workflow, which inputs are combined to determine the disposition?',
+          options: [
+            'Aircraft effectivity, applicable SRM data, NDI/inspection results, and engineering consultation if limits are exceeded',
+            'Assumed limits from a different aircraft model',
+            'Only the mechanic’s memory of a previous similar dent',
+            'Airline schedule priority without checking effectivity'
+          ],
+          answer: 0,
+          rationale: 'Step 5 (ASSESS) verifies aircraft effectivity, applies the relevant SRM allowable damage/repair data, incorporates inspection results, and escalates to engineering when needed.'
+        },
+        {
+          id: 'k2-q19',
+          source: 2,
+          question: 'In SRM 51-00-21-0G-0 / 51-00-06, what distinguishes a Category A repair from Category B and Category C repairs?',
+          options: [
+            'Category A is a permanent repair requiring no follow-up replacement or supplemental inspections beyond the normal maintenance program',
+            'Category A is valid for only 50 flight hours',
+            'Category A can only be used on non-pressurized fairings',
+            'Category A does not need to match the aircraft maintenance records'
+          ],
+          answer: 0,
+          rationale: 'A Category A repair is permanent and restores full structural capability without requiring subsequent replacement or supplemental inspections.'
+        },
+        {
+          id: 'k2-q20',
+          source: 2,
+          question: 'Why is it essential to document structural repairs so the aircraft’s physical configuration matches its maintenance records?',
+          options: [
+            'To ensure future damage assessments accurately account for existing repairs, doublers, and supplemental inspection schedules',
+            'Solely for calculating exterior paint weight during repainting',
+            'Only when an aircraft is being sold to another operator',
+            'Because Boeing prohibits more than one Category A repair per fuselage'
+          ],
+          answer: 0,
+          rationale: 'Accurate configuration records ensure engineers know where prior repairs exist (affecting proximity limits) and ensure any Cat B/C supplemental inspections are tracked.'
+        },
+        {
+          id: 'k2-q21',
+          source: 2,
+          question: 'When assessing allowable damage on pressurized fuselage skin outside the crown area (S10L to S10R), what geometric factor must be evaluated alongside the 15% cross-sectional area limit?',
+          options: [
+            'The distance from an initial hole, fastener, or skin edge',
+            'The cabin seat pitch above the damaged skin panel',
+            'The color of the primer applied inside the fuselage',
+            'The number of passenger windows in the same section'
+          ],
+          answer: 0,
+          rationale: 'In addition to keeping removed cross-sectional area at or below 15%, the analyst must evaluate distance from any initial hole, fastener, or skin edge.'
+        },
+        {
+          id: 'k2-q22',
+          source: 2,
+          question: 'In metallic structural terminology, how is a "crease" differentiated from a standard "dent"?',
+          options: [
+            'A crease is a sharp, severe fold or ridge in the metal (high stress concentration), whereas a dent has smooth, rounded contours',
+            'A crease removes paint only, while a dent always cracks the underlying frame',
+            'A crease occurs only on composite panels, while a dent occurs only on aluminum',
+            'A crease is always allowable without inspection'
+          ],
+          answer: 0,
+          rationale: 'A crease involves sharp local plastic deformation with a tight bend radius that acts as a severe fatigue stress concentrator, unlike a smooth dent.'
+        },
+        {
+          id: 'k2-q23',
+          source: 2,
+          question: 'What is the structural purpose of stop-drilling the tips of a metallic skin crack as part of an interim or ferry disposition?',
+          options: [
+            'To relieve the sharp stress concentration at the crack tip and retard further crack propagation',
+            'To permanently restore 100% of the original static strength of the skin',
+            'To create a drainage path for cabin condensation',
+            'To allow dye penetrant to evaporate faster'
+          ],
+          answer: 0,
+          rationale: 'Drilling a smooth circular stop-hole at the exact crack tip replaces a sharp singularity with a larger radius, dramatically reducing local stress concentration.'
+        },
+        {
+          id: 'k2-q24',
+          source: 2,
+          question: 'Which NDI method uses capillary action of a colored or fluorescent liquid to reveal surface-breaking cracks in non-porous metals?',
+          options: [
+            'Liquid dye penetrant inspection',
+            'Magnetic particle inspection',
+            'Radiography',
+            'Tap testing'
+          ],
+          answer: 0,
+          rationale: 'Liquid penetrant inspection relies on capillary action to draw penetrant into surface-open discontinuities, which developer then makes visible.'
+        },
+        {
+          id: 'k2-q25',
+          source: 2,
+          question: 'Why must aerodynamic smoothness requirements be verified after completing an external structural repair?',
+          options: [
+            'Surface steps, gaps, or protruding fasteners in critical zones disrupt airflow, increase drag, and can cause air data sensor errors',
+            'Aerodynamic smoothness is checked only to prevent paint peeling in rain',
+            'Smoothness requirements apply exclusively to cargo compartment floor beams',
+            'Protruding repair patches are prohibited only on the horizontal stabilizer'
+          ],
+          answer: 0,
+          rationale: 'External steps or waviness in aerodynamically critical zones degrade performance, increase drag, and can disturb pitot-static/AOA air data probes.'
+        },
+        {
+          id: 'k2-q26',
+          source: 2,
+          question: 'What characterizes a "buckle" in a metallic sheet or structural web?',
+          options: [
+            'Out-of-plane distortion or wrinkling caused by compressive or shear instability',
+            'A narrow linear cut made by a sharp dropped tool',
+            'Localized chemical pitting from trapped moisture',
+            'A circular hole drilled oversize during maintenance'
+          ],
+          answer: 0,
+          rationale: 'Buckling is an out-of-plane elastic or plastic wave/distortion resulting from compressive or shear overload in thin skins or webs.'
+        },
+        {
+          id: 'k2-q27',
+          source: 2,
+          question: 'Which NDI method is capable of imaging internal hidden structure, water entrapment in honeycomb, or internal cracking without disassembly?',
+          options: [
+            'Radiographic (X-ray) inspection',
+            'Liquid dye penetrant inspection',
+            'Magnetic particle inspection',
+            'Surface roughness profilometry'
+          ],
+          answer: 0,
+          rationale: 'Radiography (X-ray) penetrates multi-layer assemblies to reveal hidden cracks, corrosion, loose hardware, or trapped moisture inside honeycomb cores.'
+        },
+
+        // --- Source 3 (13 questions) ---
+        {
+          id: 'k2-q28',
+          source: 3,
+          question: 'What are the two primary structural roles of the Boeing 787 fuselage?',
+          options: [
+            'To house wing fuel tanks and support the engine pylons directly',
+            'To provide a cabin pressure boundary and carry the aircraft payload',
+            'To replace the aerodynamic trim function of the horizontal stabilizer',
+            'To serve solely as an aerodynamic fairing around the landing gear'
+          ],
+          answer: 1,
+          rationale: 'The 787 fuselage serves as the pressurized cabin boundary and the primary structural vessel carrying passengers and cargo payload.'
+        },
+        {
+          id: 'k2-q29',
+          source: 3,
+          question: 'Besides the CFRP skins and co-cured stringers between STA 132.5 and STA 1878, what material is used for the 787 fuselage frames, bulkheads, and floor beams in that region?',
+          options: [
+            'Galvanized carbon steel',
+            'Carbon Fiber Reinforced Plastic (CFRP)',
+            'Cast magnesium alloy',
+            'Unreinforced fiberglass'
+          ],
+          answer: 1,
+          rationale: 'Within STA 132.5 to STA 1878 on the 787, the frames, bulkheads, and floor beams are also fabricated from CFRP.'
+        },
+        {
+          id: 'k2-q30',
+          source: 3,
+          question: 'How are the wing skins and bonded stringers of the Boeing 787 wing (ATA 57) manufactured?',
+          options: [
+            'From chemically milled 7075 aluminum plate',
+            'From carbon epoxy tape or fabric',
+            'From hot-rolled titanium sheet',
+            'From fiberglass honeycomb core with aluminum skins'
+          ],
+          answer: 1,
+          rationale: 'The Boeing 787 wing skins and bonded stringers are fabricated from carbon epoxy tape or fabric.'
+        },
+        {
+          id: 'k2-q31',
+          source: 3,
+          question: 'On the Boeing 787 vertical stabilizer (ATA 55), what primary loads do the composite skins carry?',
+          options: [
+            'Cabin pressurization hoop loads',
+            'Vertical stabilizer bending loads and resistance to side gusts',
+            'Engine thrust and reverse-thrust loads',
+            'Main landing gear touchdown shock loads'
+          ],
+          answer: 1,
+          rationale: 'The 787 vertical stabilizer skins carry fin bending loads and resist aerodynamic side-gust loads.'
+        },
+        {
+          id: 'k2-q32',
+          source: 3,
+          question: 'What is the structural function of the stringers inside the Boeing 787 vertical stabilizer?',
+          options: [
+            'They carry bending loads and stabilize the composite skins against buckling',
+            'They act exclusively as lightning ground straps',
+            'They hold the rudder hydraulic actuators in place without carrying flight loads',
+            'They separate internal fuel cells within the vertical fin'
+          ],
+          answer: 0,
+          rationale: 'Vertical stabilizer stringers carry axial bending loads and provide stability to the CFRP skins.'
+        },
+        {
+          id: 'k2-q33',
+          source: 3,
+          question: 'What role do the ribs play inside the Boeing 787 vertical stabilizer?',
+          options: [
+            'They carry air loads to the spars and stabilize both the skins and stringers',
+            'They replace the front and rear spars near the fin tip',
+            'They serve only as mounting brackets for navigation lights',
+            'They insulate the rudder from cabin noise'
+          ],
+          answer: 0,
+          rationale: 'Ribs in the 787 vertical stabilizer transfer aerodynamic air loads into the spars and stabilize the skin-stringer panels.'
+        },
+        {
+          id: 'k2-q34',
+          source: 3,
+          question: 'In a composite sandwich honeycomb panel, which simple field NDI check is commonly used alongside bond testers to detect skin-to-core disbonds?',
+          options: [
+            'Tap test (acoustic tap hammer / coin tap)',
+            'Magnetic particle testing',
+            'Eddy current conductivity test',
+            'Hydrostatic pressure test'
+          ],
+          answer: 0,
+          rationale: 'Tap testing (and electronic bond testers) detects skin-to-core disbonds in honeycomb sandwich structures by identifying dull acoustic response changes.'
+        },
+        {
+          id: 'k2-q35',
+          source: 3,
+          question: 'When performing a bolted repair on a Boeing 787 CFRP structure, which fastener materials are required to prevent galvanic corrosion?',
+          options: [
+            'Bare aluminum alloy rivets',
+            'Titanium or Corrosion-Resistant Steel (CRES) fasteners',
+            'Cadmium-plated brass screws',
+            'Magnesium lockbolts'
+          ],
+          answer: 1,
+          rationale: 'Titanium or CRES fasteners are galvanically compatible with carbon fiber composites and are standard for bolted CFRP repairs.'
+        },
+        {
+          id: 'k2-q36',
+          source: 3,
+          question: 'In a bonded composite scarf repair, why is the damaged laminate tapered (scarfed) at a shallow slope ratio (e.g., 1:30 or similar per SRM)?',
+          options: [
+            'To maximize bondline surface area, transfer loads smoothly in shear, and restore aerodynamic flushness',
+            'To make the repair patch protrude above the skin for visual inspection',
+            'To allow standard solid aluminum rivets to be driven through the bondline',
+            'To eliminate the need for vacuum bagging during cure'
+          ],
+          answer: 0,
+          rationale: 'A shallow scarf taper provides a large adhesive shear area to transfer ply-by-ply loads smoothly while preserving a flush aerodynamic contour.'
+        },
+        {
+          id: 'k2-q37',
+          source: 3,
+          question: 'Why is restoring the exact ply orientation (e.g., 0°, ±45°, 90°) critical during a composite layup repair?',
+          options: [
+            'Composite strength and stiffness are directional; incorrect ply angles alter load paths and reduce repair capability',
+            'Ply orientation affects only the exterior paint color',
+            'All composite plies are isotropic, so orientation only helps with cutting speed',
+            'Ply orientation matters only on fiberglass radomes, not on CFRP'
+          ],
+          answer: 0,
+          rationale: 'Composite laminates are anisotropic—fibers carry load primarily along their axis—so every replacement ply must match the SRM-specified orientation.'
+        },
+        {
+          id: 'k2-q38',
+          source: 3,
+          question: 'What is the primary purpose of vacuum bagging during a bonded composite repair cure?',
+          options: [
+            'To apply uniform consolidation pressure, compact the plies, and extract trapped air and volatiles',
+            'To cool the resin rapidly below freezing before cure',
+            'To strip the lightning protection mesh from the surrounding skin',
+            'To increase the thickness of the adhesive bondline by 50%'
+          ],
+          answer: 0,
+          rationale: 'Vacuum bagging uses atmospheric pressure to consolidate the repair plies evenly against the parent laminate and evacuate air/volatiles for a void-free cure.'
+        },
+        {
+          id: 'k2-q39',
+          source: 3,
+          question: 'If separation is detected strictly along the adhesive line between a bonded stringer flange and a 787 wing skin, how is this damage classified under SRM Chapter 51?',
+          options: [
+            'Disbond',
+            'Dent',
+            'Gouge',
+            'Intergranular corrosion'
+          ],
+          answer: 0,
+          rationale: 'Separation at the adhesive bondline interface between two bonded structural parts is specifically defined as a disbond.'
+        },
+        {
+          id: 'k2-q40',
+          source: 3,
+          question: 'Which structural components are combined in the Boeing 787 horizontal stabilizer assembly?',
+          options: [
+            'CFRP solid laminate skins, 5 carbon epoxy spars (on 787-9/-10), an aluminum auxiliary box, and a composite elevator',
+            'Aluminum skins, two steel spars, and an aluminum elevator',
+            'Fiberglass skins, a single titanium spar, and a wooden trim tab',
+            'Honeycomb core spars with unreinforced plastic skins'
+          ],
+          answer: 0,
+          rationale: 'The 787 horizontal stabilizer integrates CFRP solid laminate skins and 5 carbon epoxy spars (787-9/-10) with an aluminum auxiliary box and a composite elevator.'
+        }
+      ],
+
+      // =========================================================================
+      // EXAM KEY 3 — 40 UNIQUE QUESTIONS
+      // =========================================================================
+      key3: [
+        // --- Source 1 (13 questions) ---
+        {
+          id: 'k3-q01',
+          source: 1,
+          question: 'Which ATA chapter in the Boeing SRM covers Stabilizers (horizontal and vertical)?',
+          options: [
+            'ATA 53',
+            'ATA 54',
+            'ATA 55',
+            'ATA 57'
+          ],
+          answer: 2,
+          rationale: 'ATA Chapter 55 covers Stabilizers, including both the horizontal and vertical stabilizer structures.'
+        },
+        {
+          id: 'k3-q02',
+          source: 1,
+          question: 'Which ATA chapter in the Boeing SRM applies to flight deck and cabin Windows?',
+          options: [
+            'ATA 52',
+            'ATA 54',
+            'ATA 56',
+            'ATA 57'
+          ],
+          answer: 2,
+          rationale: 'ATA Chapter 56 is dedicated to Windows, while ATA 52 covers Doors and ATA 57 covers Wings.'
+        },
+        {
+          id: 'k3-q03',
+          source: 1,
+          question: 'Which ATA chapter in the Boeing SRM contains structural data for the Wings?',
+          options: [
+            'ATA 51',
+            'ATA 53',
+            'ATA 55',
+            'ATA 57'
+          ],
+          answer: 3,
+          rationale: 'ATA Chapter 57 covers the Wings, including wing skins, spars, ribs, stringers, and control surface attachment structure.'
+        },
+        {
+          id: 'k3-q04',
+          source: 1,
+          question: 'In a semi-monocoque fuselage, what is the primary structural role of circumferential frames versus longitudinal stringers?',
+          options: [
+            'Frames maintain cross-sectional shape and resist hoop stress, while stringers carry longitudinal axial and bending loads',
+            'Stringers resist hoop stress exclusively, while frames carry only nose landing gear loads',
+            'Frames and stringers are both secondary fairings that carry no flight loads',
+            'Frames seal the fuel tanks, while stringers hold the cabin windows'
+          ],
+          answer: 0,
+          rationale: 'Frames maintain fuselage cross-sectional shape and resist pressurization hoop loads, whereas stringers resist longitudinal bending and stabilize the skin.'
+        },
+        {
+          id: 'k3-q05',
+          source: 1,
+          question: 'Why are pressure bulkheads installed at the forward and aft ends of the pressurized fuselage cabin?',
+          options: [
+            'To contain cabin pressurization differentials and redistribute concentrated structural loads',
+            'To provide aerodynamic smoothing over the wing root',
+            'To allow air to pass freely into the unpressurized tail cone',
+            'To serve as mounting brackets for engine thrust reversers'
+          ],
+          answer: 0,
+          rationale: 'Forward and aft pressure bulkheads form the longitudinal pressure boundaries of the cabin and redistribute high concentrated loads into the fuselage shell.'
+        },
+        {
+          id: 'k3-q06',
+          source: 1,
+          question: 'How is the Structural Repair Manual (SRM) classified within Boeing’s maintenance manual hierarchy?',
+          options: [
+            'Customised manual',
+            'Non-Customised but Type Effective manual',
+            'Non-Customised and Non-Type Effective manual',
+            'Flight crew operational checklist'
+          ],
+          answer: 1,
+          rationale: 'The SRM is classified as Non-Customised but Type Effective, meaning it applies to a specific aircraft model type rather than a single airline’s customised configuration.'
+        },
+        {
+          id: 'k3-q07',
+          source: 1,
+          question: 'According to the Boeing SRM Introduction, what should a technician consult if an applicable damaged structure is not directly identified in the SRM text?',
+          options: [
+            'The reference drawing numbers listed in the SRM',
+            'The Flight Crew Operations Manual (FCOM)',
+            'The Standard Wiring Practices Manual (SWPM)',
+            'The airline cabin service manual'
+          ],
+          answer: 0,
+          rationale: 'The SRM Introduction instructs personnel to refer to the listed reference drawing numbers whenever the applicable structure is not directly identified.'
+        },
+        {
+          id: 'k3-q08',
+          source: 1,
+          question: 'In the Boeing SRM Chapter-Section-Subject structure, what does the topic "Allowable Damage 1" provide compared to "Repair 1" under the same subject (e.g., 55-10-09)?',
+          options: [
+            'Allowable Damage 1 defines limits of damage permitted without repair (or with minor rework), whereas Repair 1 provides approved structural repair procedures',
+            'Allowable Damage 1 lists only paint colors, while Repair 1 lists only NDI equipment',
+            'Repair 1 must always be performed before checking Allowable Damage 1',
+            'Both topics contain identical data for different aircraft models'
+          ],
+          answer: 0,
+          rationale: 'Under a given Chapter-Section-Subject, Allowable Damage topics define permissible damage limits, while Repair topics provide approved repair instructions when limits are exceeded.'
+        },
+        {
+          id: 'k3-q09',
+          source: 1,
+          question: 'Why does contact between unprotected aluminum and Carbon Fiber Reinforced Plastic (CFRP) in the presence of moisture lead to rapid corrosion?',
+          options: [
+            'A galvanic cell forms in which aluminum acts as the anode and corrodes rapidly against cathodic carbon fiber',
+            'Carbon fiber dissolves chemically in aluminum primer',
+            'Aluminum expands thermally to crush the carbon fibers',
+            'CFRP releases hydrochloric acid when exposed to air'
+          ],
+          answer: 0,
+          rationale: 'Carbon is far more noble (cathodic) than aluminum in the galvanic series; direct electrical contact plus moisture creates an aggressive galvanic cell that corrodes the aluminum.'
+        },
+        {
+          id: 'k3-q10',
+          source: 1,
+          question: 'On the Boeing 737 MAX, which group of components typically uses fiberglass (GFRP) or honeycomb sandwich construction?',
+          options: [
+            'Wing-to-body fairings, flap track fairings, fixed leading/trailing edge panels, radome, and tail cone',
+            'Front and rear main wing spars and landing gear beams',
+            'Fuselage pressure bulkheads and engine pylon fuse pins',
+            'Cockpit windshield structural posts and keel beam'
+          ],
+          answer: 0,
+          rationale: 'Fiberglass and honeycomb sandwich panels are widely used on secondary/aerodynamic structures such as the radome, wing-to-body fairings, flap track fairings, tail cone, and fixed leading/trailing edge panels.'
+        },
+        {
+          id: 'k3-q11',
+          source: 1,
+          question: 'Why are each aircraft’s specific effectivity and approved maintenance data mandatory even when multiple Boeing models share common structural principles?',
+          options: [
+            'Because model- and line-number-specific effectivity governs exact material gages, configurations, allowable limits, and repair applicability',
+            'Because ATA chapter numbers 51–57 change randomly between Boeing 737 and 777',
+            'Because training manuals are automatically approved as maintenance data once signed',
+            'Because effectivity applies only to cabin interior carpeting'
+          ],
+          answer: 0,
+          rationale: 'While Boeing aircraft share common structural principles, every individual aircraft is governed by its own effectivity and approved maintenance data; training material is never approved maintenance data.'
+        },
+        {
+          id: 'k3-q12',
+          source: 1,
+          question: 'On the Boeing 777, what material is used for the passenger cabin floor beams (except on the Freighter variant)?',
+          options: [
+            'Carbon Fiber Reinforced Plastic (CFRP)',
+            'Cast iron',
+            'Unreinforced fiberglass',
+            'Solid copper alloy'
+          ],
+          answer: 0,
+          rationale: 'As shown on the 777 composite application diagram, passenger cabin floor beams (except on the Freighter) are constructed from Carbon Fiber Reinforced Plastic (CFRP).'
+        },
+        {
+          id: 'k3-q13',
+          source: 1,
+          question: 'Which Boeing manual is a non-customised document that provides instructions for maintenance and repair of wiring across all Boeing airplanes?',
+          options: [
+            'Standard Wiring Practices Manual (SWPM)',
+            'Structural Repair Manual (SRM)',
+            'Illustrated Parts Catalog (IPC)',
+            'Weight and Balance Manual (WBM)'
+          ],
+          answer: 0,
+          rationale: 'The Standard Wiring Practices Manual (SWPM) is not customised and provides standard wiring maintenance and repair instructions for all Boeing airplanes.'
+        },
+
+        // --- Source 2 (13 questions) ---
+        {
+          id: 'k3-q14',
+          source: 2,
+          question: 'Before applying any allowable damage table or repair procedure in the SRM, what verification must the technician perform?',
+          options: [
+            'Confirm the manual is at the latest revision status and check for any active Temporary Revisions (TRs)',
+            'Check only the cover page copyright year',
+            'Verify that the manual has been printed on colored paper',
+            'Skip checking effectivity if the aircraft model matches'
+          ],
+          answer: 0,
+          rationale: 'Always verify current revision status and active Temporary Revisions (TRs) before using SRM data for an airworthiness decision.'
+        },
+        {
+          id: 'k3-q15',
+          source: 2,
+          question: 'Which statement accurately describes a Category B repair under Boeing SRM 51-00-21-0G-0 / 51-00-06?',
+          options: [
+            'It is an interim repair that requires supplemental inspections or follow-up actions outside normal maintenance and must be recorded in aircraft maintenance records',
+            'It is a permanent repair that never requires any supplemental inspection',
+            'It is an unapproved field patch restricted strictly to non-flying display aircraft',
+            'It requires no documentation in the aircraft logbook'
+          ],
+          answer: 0,
+          rationale: 'A Category B repair is an interim repair; any supplemental inspections or actions outside the standard maintenance program must be formally documented in maintenance records.'
+        },
+        {
+          id: 'k3-q16',
+          source: 2,
+          question: 'What defines a Category C repair under Boeing SRM 51-00-21-0G-0 / 51-00-06?',
+          options: [
+            'It is a time-limited repair that must be replaced or upgraded within a specified limit and tracked in the aircraft maintenance records',
+            'It is a permanent repair with unlimited flight cycles',
+            'It applies exclusively to composite lightning strike mesh',
+            'It exempts the operator from regulatory oversight'
+          ],
+          answer: 0,
+          rationale: 'Category C designates a time-limited repair with mandatory tracking of its time/cycle limit and any associated inspections in the aircraft maintenance records.'
+        },
+        {
+          id: 'k3-q17',
+          source: 2,
+          question: 'Why must a close-up photograph taken during Step 4 (RECORD) include a physical scale or ruler next to the damage?',
+          options: [
+            'So another engineer reviewing the report remotely can verify true damage dimensions and proportions objectively',
+            'To hide nearby fastener heads from the camera',
+            'Because Boeing software cannot open photos without a metallic ruler',
+            'To replace the need for measuring damage depth'
+          ],
+          answer: 0,
+          rationale: 'Including a scale in close-up photos gives remote engineers an objective visual reference to verify size, orientation, and proximity to surrounding features.'
+        },
+        {
+          id: 'k3-q18',
+          source: 2,
+          question: 'When evaluating multiple initial holes or local material removal on pressurized fuselage skin outside the crown area (S10L to S10R), what is the maximum cross-sectional area removal threshold?',
+          options: [
+            'Less than or equal to 15% of the total cross-sectional area in any local region',
+            'Less than or equal to 35% of the total cross-sectional area',
+            'Less than or equal to 2% of the total cross-sectional area',
+            'No limit exists as long as the holes are circular'
+          ],
+          answer: 0,
+          rationale: 'The SRM limits total cross-sectional area removed (including all initial holes) to no more than 15% of the total cross-sectional area in any local region.'
+        },
+        {
+          id: 'k3-q19',
+          source: 2,
+          question: 'In metallic damage assessment, what is a "nick" as distinct from a "scratch"?',
+          options: [
+            'A nick is a small, localized sharp-bottomed indentation or notch (often on an edge), whereas a scratch is a narrow linear score along the surface',
+            'A nick is always caused by lightning, while a scratch is always caused by corrosion',
+            'A nick penetrates through both sides of a spar web',
+            'A scratch is always deeper than 50% of the skin thickness'
+          ],
+          answer: 0,
+          rationale: 'A nick is a localized sharp notch (commonly on part edges), while a scratch is a narrow linear mark drawn across a surface.'
+        },
+        {
+          id: 'k3-q20',
+          source: 2,
+          question: 'Why must corrosion products be completely removed from a metallic structure before assessing remaining thickness and applying protective finish?',
+          options: [
+            'Residual corrosion continues to propagate beneath primer/paint and masks the true remaining load-carrying thickness',
+            'Corrosion products prevent eddy current probes from turning on',
+            'Removing corrosion increases the original design thickness of the skin',
+            'Only cosmetic corrosion needs removal; structural corrosion can be painted over'
+          ],
+          answer: 0,
+          rationale: 'Any remaining corrosion will continue active electrochemical attack under new coatings and prevents accurate measurement of the true remaining sound metal thickness.'
+        },
+        {
+          id: 'k3-q21',
+          source: 2,
+          question: 'When inspecting a metallic dent in a pressurized fuselage skin, why is NDI (such as eddy current or dye penetrant) frequently required in addition to depth measurement?',
+          options: [
+            'To verify that no cracks, creases, or underlying frame/stringer damage were initiated by the impact',
+            'To measure the exact color shade of the exterior paint',
+            'To calculate the cabin differential pressure in cruise',
+            'To avoid having to record the dent location'
+          ],
+          answer: 0,
+          rationale: 'Even a shallow dent can hide micro-cracking or internal substructure damage; NDI confirms the absence of cracks before applying allowable dent limits.'
+        },
+        {
+          id: 'k3-q22',
+          source: 2,
+          question: 'What is the primary goal of documenting a clear "next action" at the end of a structural damage report?',
+          options: [
+            'To eliminate ambiguity so maintenance, inspection, or engineering teams know immediately whether to perform NDI, apply an SRM repair, or request engineering disposition',
+            'To assign blame for how the ground handling damage occurred',
+            'To close the aircraft logbook without completing the assessment',
+            'To defer all structural inspections until the next annual check'
+          ],
+          answer: 0,
+          rationale: 'A clear next action ensures seamless handoff between technicians and engineers so required NDI, SRM actions, or engineering escalations happen without delay.'
+        },
+        {
+          id: 'k3-q23',
+          source: 2,
+          question: 'Why is determining exact wing station and proximity to spars or ribs mandatory before evaluating wing skin damage in the SRM?',
+          options: [
+            'Because location controls material gage/alloy applicability, allowable damage limits, and which repair procedures are permitted',
+            'Because all wing skin panels have identical thickness from root to tip',
+            'Because wing station is needed only for fueling calculations',
+            'Because damages near spars never require NDI'
+          ],
+          answer: 0,
+          rationale: 'Wing skin thickness, alloy, and stress levels vary significantly by wing station and proximity to spars/ribs, directly governing allowable damage and repair eligibility.'
+        },
+        {
+          id: 'k3-q24',
+          source: 2,
+          question: 'If an observed structural damage exceeds the Allowable Damage Limit (ADL) and no applicable SRM repair exists, what is the required course of action?',
+          options: [
+            'Escalate to authorized structural engineering / Boeing for an approved repair disposition before returning the aircraft to service',
+            'Modify an unrelated SRM repair from another chapter without approval',
+            'Blend out the damage until it visually disappears and sign off the logbook',
+            'Dispatch the aircraft under a Category A logbook entry'
+          ],
+          answer: 0,
+          rationale: 'When damage falls outside SRM allowable limits and approved SRM repairs, engineering/OEM disposition and regulatory approval are required prior to release.'
+        },
+        {
+          id: 'k3-q25',
+          source: 2,
+          question: 'During a metallic blend-out (clean-up), why must the blended transition be smooth and polished with a gradual blend ratio?',
+          options: [
+            'To eliminate sharp notches and machining marks that would act as fatigue crack initiation sites',
+            'To make the area easier to spot from 100 feet away',
+            'To increase surface roughness so sealant adheres thicker',
+            'To reduce the fastener edge margin intentionally'
+          ],
+          answer: 0,
+          rationale: 'A smooth, gradual blend-out removes sharp stress concentrations and tool marks, preserving fatigue life of the remaining metal.'
+        },
+        {
+          id: 'k3-q26',
+          source: 2,
+          question: 'Which NDI technique uses high-frequency sound waves to measure remaining metallic skin thickness after corrosion blend-out when only one side is accessible?',
+          options: [
+            'Ultrasonic thickness gauging',
+            'Magnetic particle inspection',
+            'Liquid dye penetrant inspection',
+            'Visual mirror inspection'
+          ],
+          answer: 0,
+          rationale: 'Ultrasonic thickness gauges accurately measure remaining metal wall thickness from a single accessible surface after corrosion removal or blend-out.'
+        },
+
+        // --- Source 3 (14 questions) ---
+        {
+          id: 'k3-q27',
+          source: 3,
+          question: 'Which Body Station range on the Boeing 787 comprises the CFRP fuselage sections with co-cured longitudinal stringers?',
+          options: [
+            'STA 10 to STA 120',
+            'STA 132.5 to STA 1878',
+            'STA 500 to STA 900 only',
+            'STA 1900 to STA 2300'
+          ],
+          answer: 1,
+          rationale: 'The Boeing 787 composite fuselage structure—with CFRP skins, co-cured stringers, frames, bulkheads, and floor beams—spans STA 132.5 to STA 1878.'
+        },
+        {
+          id: 'k3-q28',
+          source: 3,
+          question: 'Which statement accurately describes the double-lobe cross-section of the Boeing 787 fuselage?',
+          options: [
+            'It has an upper lobe radius of 113 inches and a lower lobe radius of 110 inches, separated by the passenger floor',
+            'It has an upper lobe radius of 110 inches and a lower lobe radius of 113 inches, separated by the cargo floor',
+            'It is a perfectly circular tube with a constant 100-inch radius',
+            'It has a flat vertical side wall with no lower lobe'
+          ],
+          answer: 0,
+          rationale: 'The 787 fuselage cross-section combines a 113-inch radius upper lobe and a 110-inch radius lower lobe joined at the passenger floor.'
+        },
+        {
+          id: 'k3-q29',
+          source: 3,
+          question: 'Why must cutouts such as doors, windows, and nose/main landing gear wheel wells receive special attention when planning a 787 fuselage repair?',
+          options: [
+            'They feature critical local composite reinforcements and ply drop-offs that govern repair design and allowable limits',
+            'They are built solely from non-structural fiberglass',
+            'They are outside the pressurized zone of the fuselage',
+            'They do not allow ultrasonic NDI inspection'
+          ],
+          answer: 0,
+          rationale: 'Cutouts interrupt primary load paths and therefore incorporate tailored local CFRP reinforcements that must be respected in any repair.'
+        },
+        {
+          id: 'k3-q30',
+          source: 3,
+          question: 'What combination of materials forms the main structural box of the Boeing 787 wing (ATA 57)?',
+          options: [
+            'Carbon epoxy tape/fabric skins and bonded stringers, carbon epoxy front and rear spars, and aluminum ribs',
+            'Aluminum skins, steel front spar, and fiberglass ribs',
+            'Titanium skins, aluminum spars, and CFRP ribs',
+            'All-aluminum riveted torque box identical to the 737'
+          ],
+          answer: 0,
+          rationale: 'The 787 wing box integrates carbon epoxy tape/fabric skins and bonded stringers with carbon epoxy front/rear spars and aluminum ribs.'
+        },
+        {
+          id: 'k3-q31',
+          source: 3,
+          question: 'In the Boeing 787 wing fuel tanks, what three functions are fulfilled by the tank ribs?',
+          options: [
+            'Structural support, tank separation, and restriction of fuel movement during maneuvers',
+            'Fuel heating, lightning grounding, and wing anti-ice distribution',
+            'Only holding fuel quantity probes, pumps, and boost valves',
+            'Supporting landing gear doors, flaps, and spoilers directly'
+          ],
+          answer: 0,
+          rationale: 'Tank ribs provide internal wing structural support, separate individual fuel tank bays, and restrict fuel sloshing during flight maneuvers.'
+        },
+        {
+          id: 'k3-q32',
+          source: 3,
+          question: 'How many carbon epoxy solid laminate spars are incorporated in the horizontal stabilizer of the Boeing 787-9 and 787-10?',
+          options: [
+            '2 spars',
+            '3 spars',
+            '5 spars',
+            '8 spars'
+          ],
+          answer: 2,
+          rationale: 'The Boeing 787-9 and 787-10 horizontal stabilizer utilizes a center box assembly and 5 spars of carbon epoxy solid laminate structure.'
+        },
+        {
+          id: 'k3-q33',
+          source: 3,
+          question: 'On the Boeing 787 vertical stabilizer, what Boeing Material Standard (BMS) specifies the composite skins and stringers, and what loads do the skins resist?',
+          options: [
+            'BMS 8-276; skins carry bending loads and resist side gusts',
+            'BMS 5-95; skins carry only vertical weight of the rudder',
+            'BMS 10-60; skins resist cabin pressurization only',
+            'BMS 8-124; skins act only as secondary aerodynamic fairings'
+          ],
+          answer: 0,
+          rationale: 'The 787 vertical stabilizer skins and stringers are made from BMS 8-276 carbon composite; the skins carry fin bending loads and resist side gusts.'
+        },
+        {
+          id: 'k3-q34',
+          source: 3,
+          question: 'During an ultrasonic inspection of a solid CFRP fuselage skin, separation is found between plies 6 and 7 within the laminate. How is this classified in SRM Chapter 51?',
+          options: [
+            'Delamination',
+            'Disbond',
+            'Dent',
+            'Abrasion'
+          ],
+          answer: 0,
+          rationale: 'Separation occurring between individual plies inside a composite laminate is classified as a delamination.'
+        },
+        {
+          id: 'k3-q35',
+          source: 3,
+          question: 'How does a composite "gouge" or "scratch" differ from a composite "dent" in SRM Chapter 51?',
+          options: [
+            'A gouge or scratch involves surface material removal or broken fibers, whereas a dent depresses the surface smoothly without removing material or breaking fibers',
+            'A dent always breaks at least 50% of the laminate plies',
+            'A scratch never affects the lightning protection mesh or surface resin',
+            'A gouge occurs only on the interior face of a laminate'
+          ],
+          answer: 0,
+          rationale: 'Scratches and gouges remove resin/fibers from the surface, while a dent is a smooth depression with no material removal and no broken fibers.'
+        },
+        {
+          id: 'k3-q36',
+          source: 3,
+          question: 'When inspecting a CFRP panel on a 787 after a low-velocity tool drop or hail impact, why is visual inspection of the impacted face alone insufficient?',
+          options: [
+            'Internal delamination and back-side fiber splitting can be much larger than the minor indentation visible on the impacted face',
+            'Because CFRP turns transparent when impacted',
+            'Because impacts on CFRP only damage aluminum ribs and never the skin',
+            'Because paint completely prevents any delamination from forming'
+          ],
+          answer: 0,
+          rationale: 'Composite laminates can exhibit barely visible impact damage (BVID) on the struck face while concealing significant internal delamination and back-face damage.'
+        },
+        {
+          id: 'k3-q37',
+          source: 3,
+          question: 'What is a key operational advantage of a bolted titanium/CRES patch repair versus a bonded scarf repair on a 787 composite structure?',
+          options: [
+            'Bolted repairs can be completed faster in line/field conditions without lengthy moisture drying and autoclave/hot-bond cure cycles, though they may impact weight and flushness',
+            'Bolted repairs require no fastener hole quality control or edge margin limits',
+            'Bolted repairs can use bare aluminum rivets without corrosion risk',
+            'Bolted repairs always restore 100% original aerodynamic flushness without countersinking'
+          ],
+          answer: 0,
+          rationale: 'Bolted repairs using titanium or CRES fasteners allow rapid, reliable structural restoration without extensive drying and hot-bonding cures, making them practical when turnaround or moisture constraints exist.'
+        },
+        {
+          id: 'k3-q38',
+          source: 3,
+          question: 'Why must lightning strike protection (copper/expanded metal foil mesh) be restored as part of an exterior 787 composite repair?',
+          options: [
+            'To maintain continuous electrical conductivity across the repaired zone so future lightning strikes do not puncture or delaminate the underlying CFRP',
+            'To increase the aerodynamic roughness of the fuselage skin',
+            'To replace the structural load-carrying plies of the laminate',
+            'Solely to improve ultrasonic probe coupling during future NDI'
+          ],
+          answer: 0,
+          rationale: 'Restoring the conductive foil mesh preserves electrical continuity across the repair, ensuring lightning energy is dissipated safely rather than damaging the CFRP.'
+        },
+        {
+          id: 'k3-q39',
+          source: 3,
+          question: 'Why are aerodynamic smoothness requirements strictly enforced after performing a composite repair on 787 exterior panels, leading edges, or fairings?',
+          options: [
+            'Surface irregularities in critical aerodynamic zones disturb airflow, increase fuel burn/drag, and can degrade air data sensor accuracy',
+            'Aerodynamic smoothness is required only to prevent static buildup in the cabin',
+            'Smoothness applies exclusively to interior baggage compartment panels',
+            'Composite repairs do not affect airflow because carbon fiber is smoother than aluminum'
+          ],
+          answer: 0,
+          rationale: 'Maintaining aerodynamic contour and smoothness prevents airflow separation, drag penalties, and errors in nearby pitot-static or angle-of-attack sensors.'
+        },
+        {
+          id: 'k3-q40',
+          source: 3,
+          question: 'Which combination of NDI methods best matches solid CFRP laminates versus composite honeycomb sandwich panels during Boeing 787 damage assessment?',
+          options: [
+            'Ultrasonic inspection for solid laminates; tap test and/or bond tester (plus ultrasonic/X-ray as needed) for honeycomb sandwich panels',
+            'Magnetic particle inspection for solid laminates; dye penetrant for honeycomb cores',
+            'Eddy current for fiberglass radomes; magnetic particle for carbon spars',
+            'Visual inspection only for both solid laminates and honeycomb panels'
+          ],
+          answer: 0,
+          rationale: 'Solid CFRP laminates are primarily evaluated with ultrasonic NDI, whereas honeycomb sandwich panels are commonly screened with tap tests and bond testers (supplemented by NTM methods as required).'
+        }
+      ]
+    };
+
+    // =========================================================================
+    // APPLICATION STATE & LOCALSTORAGE PERSISTENCE
+    // =========================================================================
+    const STORAGE_KEY = 'boeing_srm_exam_sim_en_v1';
+    const OPTION_LETTERS = ['A', 'B', 'C', 'D'];
+    const PASSING_THRESHOLD = 75;
+
+    let activeKey = 'key1';
+    let activeFilter = 'all'; // 'all' | 'unanswered' | 'incorrect'
+    let userAnswers = {
+      key1: {},
+      key2: {},
+      key3: {}
+    };
+
+    /**
+     * Safely load saved answers per Exam Key from localStorage
+     */
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object') {
+            userAnswers = {
+              key1: parsed.key1 || {},
+              key2: parsed.key2 || {},
+              key3: parsed.key3 || {}
+            };
+          }
+        }
+      } catch (err) {
+        console.warn('Unable to load saved progress from localStorage:', err);
+      }
+    }
+
+    /**
+     * Safely save answers per Exam Key to localStorage
+     */
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(userAnswers));
+      } catch (err) {
+        console.warn('Unable to save progress to localStorage:', err);
+      }
+    }
+
+    /**
+     * Compute live statistics and source breakdown for a given Exam Key
+     */
+    function getKeyStats(keyId) {
+      const questions = EXAM_DATA[keyId];
+      const answers = userAnswers[keyId] || {};
+      const total = questions.length;
+      let answered = 0;
+      let correct = 0;
+      let incorrect = 0;
+
+      const bySource = {
+        1: { total: 0, correct: 0, answered: 0 },
+        2: { total: 0, correct: 0, answered: 0 },
+        3: { total: 0, correct: 0, answered: 0 }
+      };
+
+      questions.forEach((q) => {
+        bySource[q.source].total += 1;
+        if (answers[q.id] !== undefined) {
+          answered += 1;
+          bySource[q.source].answered += 1;
+          if (answers[q.id] === q.answer) {
+            correct += 1;
+            bySource[q.source].correct += 1;
+          } else {
+            incorrect += 1;
+          }
+        }
+      });
+
+      const unanswered = total - answered;
+      const accuracy = answered > 0 ? Math.round((correct / answered) * 100) : 0;
+      const finalScore = Math.round((correct / total) * 100);
+      const progressPct = Math.round((answered / total) * 100);
+
+      return { total, answered, correct, incorrect, unanswered, accuracy, finalScore, progressPct, bySource };
+    }
+
+    /**
+     * Switch active Exam Key tab
+     */
+    function switchKey(keyId) {
+      if (!EXAM_DATA[keyId]) return;
+      activeKey = keyId;
+      activeFilter = 'all';
+      renderAll();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /**
+     * Switch active filter pill ('all' | 'unanswered' | 'incorrect')
+     */
+    function setFilter(filter) {
+      activeFilter = filter;
+      renderFilterButtons();
+      renderQuestions();
+    }
+
+    /**
+     * Handle answer selection: lock question immediately and display feedback
+     */
+    function selectOption(questionId, optionIndex) {
+      const answers = userAnswers[activeKey];
+      // Lock question once answered
+      if (answers[questionId] !== undefined) return;
+
+      answers[questionId] = optionIndex;
+      saveState();
+
+      renderTabs();
+      renderStats();
+      renderFilterButtons();
+      updateSingleQuestionCard(questionId);
+
+      const wasCompleteBefore = !document.getElementById('summary-card').classList.contains('hidden');
+      renderSummary();
+      const isCompleteNow = !document.getElementById('summary-card').classList.contains('hidden');
+
+      // If this was the 40th answer, smoothly reveal the Final Results Summary Card
+      if (!wasCompleteBefore && isCompleteNow) {
+        setTimeout(() => scrollToSummary(), 250);
+      }
+    }
+
+    /**
+     * Render Exam Key tabs and their completion badges
+     */
+    function renderTabs() {
+      ['key1', 'key2', 'key3'].forEach((k) => {
+        const btn = document.getElementById(`tab-${k}`);
+        const badge = document.getElementById(`tab-badge-${k}`);
+        const stats = getKeyStats(k);
+
+        badge.textContent = `${stats.answered}/${stats.total}`;
+
+        if (k === activeKey) {
+          btn.className = 'flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 px-3 sm:px-4 py-2.5 rounded-xl border text-left transition focus:outline-none focus:ring-2 focus:ring-aviation-700 bg-aerospace-900 text-white border-aerospace-900 shadow-sm';
+          badge.className = stats.answered === stats.total
+            ? 'text-[11px] font-bold px-2 py-0.5 rounded-md self-start sm:self-auto bg-emerald-500/25 text-emerald-200 border border-emerald-400/30'
+            : 'text-[11px] font-bold px-2 py-0.5 rounded-md self-start sm:self-auto bg-aviation-700 text-white';
+        } else {
+          btn.className = 'flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 px-3 sm:px-4 py-2.5 rounded-xl border text-left transition focus:outline-none focus:ring-2 focus:ring-aviation-700 bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200';
+          badge.className = stats.answered === stats.total
+            ? 'text-[11px] font-bold px-2 py-0.5 rounded-md self-start sm:self-auto bg-emerald-100 text-emerald-800'
+            : 'text-[11px] font-bold px-2 py-0.5 rounded-md self-start sm:self-auto bg-slate-200 text-slate-700';
+        }
+      });
+    }
+
+    /**
+     * Render live dashboard statistics and progress bar
+     */
+    function renderStats() {
+      const stats = getKeyStats(activeKey);
+      document.getElementById('stat-answered').textContent = `${stats.answered} / ${stats.total}`;
+      document.getElementById('stat-correct').textContent = stats.correct;
+      document.getElementById('stat-incorrect').textContent = stats.incorrect;
+      document.getElementById('stat-accuracy').textContent = `${stats.accuracy}%`;
+      document.getElementById('progress-bar').style.width = `${stats.progressPct}%`;
+
+      document.getElementById('count-all').textContent = stats.total;
+      document.getElementById('count-unanswered').textContent = stats.unanswered;
+      document.getElementById('count-incorrect').textContent = stats.incorrect;
+
+      const headerBtn = document.getElementById('headerSummaryBtnWrap');
+      if (stats.answered === stats.total) {
+        headerBtn.classList.remove('hidden');
+      } else {
+        headerBtn.classList.add('hidden');
+      }
+    }
+
+    /**
+     * Render filter pill styles
+     */
+    function renderFilterButtons() {
+      ['all', 'unanswered', 'incorrect'].forEach((f) => {
+        const btn = document.getElementById(`filter-${f}`);
+        if (f === activeFilter) {
+          btn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold transition bg-aviation-700 text-white shadow-xs';
+        } else {
+          btn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold transition bg-slate-100 hover:bg-slate-200 text-slate-700';
+        }
+      });
+    }
+
+    /**
+     * Render Final Results Summary Card when all 40 questions in active key are answered
+     */
+    function renderSummary() {
+      const card = document.getElementById('summary-card');
+      const stats = getKeyStats(activeKey);
+
+      if (stats.answered < stats.total) {
+        card.classList.add('hidden');
+        return;
+      }
+
+      card.classList.remove('hidden');
+      document.getElementById('summary-title').textContent = `Final Results — ${KEY_LABELS[activeKey]}`;
+      document.getElementById('summary-score').textContent = `${stats.finalScore}%`;
+
+      const passed = stats.finalScore >= PASSING_THRESHOLD;
+      const badge = document.getElementById('summary-status-badge');
+      const message = document.getElementById('summary-message');
+
+      if (passed) {
+        badge.textContent = 'PASS';
+        badge.className = 'px-3.5 py-1.5 rounded-xl text-xs font-extrabold uppercase tracking-wider bg-emerald-500/20 text-emerald-200 border border-emerald-400/40';
+        message.textContent = `Congratulations! You scored ${stats.correct} correct and ${stats.incorrect} incorrect out of ${stats.total} questions (${stats.finalScore}%), meeting the 75% aviation technical exam passing standard.`;
+      } else {
+        badge.textContent = 'FAIL';
+        badge.className = 'px-3.5 py-1.5 rounded-xl text-xs font-extrabold uppercase tracking-wider bg-rose-500/20 text-rose-200 border border-rose-400/40';
+        message.textContent = `You scored ${stats.correct} correct and ${stats.incorrect} incorrect out of ${stats.total} questions (${stats.finalScore}%). Review your incorrect answers and study the lower-scoring PDF sources below before retaking.`;
+      }
+
+      const breakdownEl = document.getElementById('summary-breakdown');
+      breakdownEl.innerHTML = [1, 2, 3].map((srcId) => {
+        const src = SOURCES[srcId];
+        const s = stats.bySource[srcId];
+        const pct = s.total > 0 ? Math.round((s.correct / s.total) * 100) : 0;
+        const barColor = pct >= PASSING_THRESHOLD ? 'bg-emerald-500' : 'bg-amber-500';
+        const textColor = pct >= PASSING_THRESHOLD ? 'text-emerald-700' : 'text-amber-700';
+
+        return `
+          <div class="rounded-xl border border-slate-200 bg-slate-50 p-4 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="w-2.5 h-2.5 rounded-full ${src.dotClass}"></span>
+                <span class="text-xs font-bold text-aerospace-900">${src.short}</span>
+              </div>
+              <p class="text-xs text-slate-600 leading-snug mb-3">${src.name}</p>
+            </div>
+            <div>
+              <div class="flex items-baseline justify-between mb-1.5">
+                <span class="text-sm font-extrabold text-aerospace-900">${s.correct} / ${s.total} correct</span>
+                <span class="text-xs font-bold ${textColor}">${pct}%</span>
+              </div>
+              <div class="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
+                <div class="h-full ${barColor} rounded-full" style="width: ${pct}%"></div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    /**
+     * Build HTML markup for a single question card
+     */
+    function buildQuestionCardHTML(q, index) {
+      const answers = userAnswers[activeKey];
+      const selected = answers[q.id];
+      const isAnswered = selected !== undefined;
+      const isCorrect = isAnswered && selected === q.answer;
+      const src = SOURCES[q.source];
+      const qNum = String(index + 1).padStart(2, '0');
+
+      // Status pill in card header
+      let statusHTML = `<span class="text-[11px] font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-500 border border-slate-200">Unanswered</span>`;
+      if (isAnswered) {
+        statusHTML = isCorrect
+          ? `<span class="inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
+               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+               Correct
+             </span>`
+          : `<span class="inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-full bg-rose-100 text-rose-800 border border-rose-200">
+               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+               Incorrect
+             </span>`;
+      }
+
+      // Multiple-choice option buttons (A, B, C, D)
+      const optionsHTML = q.options.map((optText, optIdx) => {
+        const letter = OPTION_LETTERS[optIdx];
+        let btnClass = 'bg-white hover:bg-slate-50 hover:border-aviation-700 border-slate-200 text-slate-800 cursor-pointer';
+        let letterClass = 'bg-slate-100 text-aerospace-900 border-slate-200';
+        let iconHTML = '';
+
+        if (isAnswered) {
+          if (optIdx === q.answer) {
+            // Always highlight the correct option in green
+            btnClass = 'bg-emerald-50 border-emerald-500 text-emerald-950 ring-1 ring-emerald-500/40 cursor-default';
+            letterClass = 'bg-emerald-600 text-white border-emerald-600';
+            iconHTML = `<svg class="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>`;
+          } else if (optIdx === selected && !isCorrect) {
+            // Highlight wrong selected option in red
+            btnClass = 'bg-rose-50 border-rose-400 text-rose-950 ring-1 ring-rose-400/40 cursor-default';
+            letterClass = 'bg-rose-600 text-white border-rose-600';
+            iconHTML = `<svg class="w-5 h-5 text-rose-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>`;
+          } else {
+            // Muted locked non-selected options
+            btnClass = 'bg-slate-50/70 border-slate-200 text-slate-400 cursor-default opacity-75';
+            letterClass = 'bg-slate-100 text-slate-400 border-slate-200';
+          }
+        }
+
+        return `
+          <button
+            type="button"
+            ${isAnswered ? 'disabled' : `onclick="selectOption('${q.id}', ${optIdx})"`}
+            class="w-full text-left flex items-start gap-3 p-3.5 rounded-xl border transition ${btnClass}"
+          >
+            <span class="w-7 h-7 rounded-lg border flex items-center justify-center text-xs font-bold shrink-0 mt-0.5 ${letterClass}">
+              ${letter}
+            </span>
+            <span class="flex-1 text-sm leading-relaxed font-medium">${optText}</span>
+            ${iconHTML}
+          </button>
+        `;
+      }).join('');
+
+      // Immediate feedback banner + Correct Answer callout (when wrong) + Technical Explanation
+      let feedbackHTML = '';
+      if (isAnswered) {
+        if (isCorrect) {
+          feedbackHTML = `
+            <div class="mt-4 rounded-xl bg-emerald-50 border border-emerald-200 p-4">
+              <div class="flex items-center gap-2 text-emerald-800 font-bold text-sm">
+                <svg class="w-5 h-5 text-emerald-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>Correct!</span>
+              </div>
+              <p class="text-xs sm:text-sm text-emerald-950/90 mt-1.5 leading-relaxed">
+                <strong class="font-semibold">Technical Explanation:</strong> ${q.rationale}
+              </p>
+            </div>
+          `;
+        } else {
+          const correctLetter = OPTION_LETTERS[q.answer];
+          const correctText = q.options[q.answer];
+          feedbackHTML = `
+            <div class="mt-4 rounded-xl bg-rose-50 border border-rose-200 p-4 space-y-2.5">
+              <div class="flex items-center gap-2 text-rose-800 font-bold text-sm">
+                <svg class="w-5 h-5 text-rose-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>Incorrect</span>
+              </div>
+              <div class="rounded-lg bg-emerald-50 border border-emerald-300 px-3.5 py-2.5 text-xs sm:text-sm text-emerald-950">
+                <strong class="font-bold text-emerald-800">Correct Answer:</strong> (${correctLetter}) ${correctText}
+              </div>
+              <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                <strong class="font-semibold text-aerospace-900">Technical Explanation:</strong> ${q.rationale}
+              </p>
+            </div>
+          `;
+        }
+      }
+
+      return `
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-slate-100">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="text-xs font-extrabold tracking-wide uppercase text-aerospace-900 bg-slate-100 px-2.5 py-1 rounded-lg">
+              Question ${qNum} / 40
+            </span>
+            <span class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 rounded-lg border ${src.badgeClass}">
+              <span class="w-1.5 h-1.5 rounded-full ${src.dotClass}"></span>
+              ${src.short}: ${src.name}
+            </span>
+          </div>
+          ${statusHTML}
+        </div>
+
+        <h3 class="text-base sm:text-[17px] font-bold text-aerospace-950 leading-snug mb-4">
+          ${q.question}
+        </h3>
+
+        <div class="space-y-2.5">
+          ${optionsHTML}
+        </div>
+
+        ${feedbackHTML}
+      `;
+    }
+
+    /**
+     * Re-render a single question card in place so scroll position stays stable
+     */
+    function updateSingleQuestionCard(questionId) {
+      const questions = EXAM_DATA[activeKey];
+      const idx = questions.findIndex((q) => q.id === questionId);
+      if (idx === -1) return;
+
+      const cardEl = document.getElementById(`card-${questionId}`);
+      if (!cardEl) {
+        renderQuestions();
+        return;
+      }
+
+      cardEl.innerHTML = buildQuestionCardHTML(questions[idx], idx);
+    }
+
+    /**
+     * Render all visible question cards for the active Exam Key and filter
+     */
+    function renderQuestions() {
+      const container = document.getElementById('questions-container');
+      const emptyState = document.getElementById('empty-filter-state');
+      const emptyText = document.getElementById('empty-filter-text');
+
+      const questions = EXAM_DATA[activeKey];
+      const answers = userAnswers[activeKey];
+
+      const filtered = questions
+        .map((q, idx) => ({ q, idx }))
+        .filter(({ q }) => {
+          const isAnswered = answers[q.id] !== undefined;
+          if (activeFilter === 'unanswered') return !isAnswered;
+          if (activeFilter === 'incorrect') return isAnswered && answers[q.id] !== q.answer;
+          return true;
+        });
+
+      if (filtered.length === 0) {
+        container.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        if (activeFilter === 'unanswered') {
+          emptyText.textContent = 'You have answered all 40 questions in this Exam Key. Check your Final Results Summary below.';
+        } else if (activeFilter === 'incorrect') {
+          emptyText.textContent = 'No incorrect answers recorded in this Exam Key so far.';
+        }
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+      container.innerHTML = filtered.map(({ q, idx }) => `
+        <article id="card-${q.id}" class="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-xs">
+          ${buildQuestionCardHTML(q, idx)}
+        </article>
+      `).join('');
+    }
+
+    /**
+     * Scroll smoothly to the Final Results Summary Card
+     */
+    function scrollToSummary() {
+      const el = document.getElementById('summary-card');
+      if (el && !el.classList.contains('hidden')) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    /**
+     * Filter to Incorrect questions and scroll to top of question list
+     */
+    function reviewIncorrect() {
+      setFilter('incorrect');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /**
+     * Open custom reset confirmation modal
+     */
+    function openResetModal() {
+      const modal = document.getElementById('reset-modal');
+      document.getElementById('reset-modal-title').textContent = `Reset ${KEY_LABELS[activeKey]}?`;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    /**
+     * Close custom reset confirmation modal
+     */
+    function closeResetModal() {
+      const modal = document.getElementById('reset-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    /**
+     * Clear saved answers for the active Exam Key only
+     */
+    function confirmResetKey() {
+      userAnswers[activeKey] = {};
+      activeFilter = 'all';
+      saveState();
+      closeResetModal();
+      renderAll();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /**
+     * Render all UI sections
+     */
+    function renderAll() {
+      renderTabs();
+      renderStats();
+      renderFilterButtons();
+      renderSummary();
+      renderQuestions();
+    }
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeResetModal();
+    });
+
+    // Initialize on DOM load
+    window.addEventListener('DOMContentLoaded', () => {
+      loadState();
+      renderAll();
+    });
+  </script>
+</body>
+</html>
